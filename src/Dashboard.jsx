@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import Appointments from './pages/Appoinments';
+import Booking from './pages/Booking';
 import { mainListItems, secondaryListItems } from "./components/navigation";
 import Chart from './components/Chart';
 import DailyTotal from "./components/DailyTotal";
@@ -27,7 +27,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Omega Poker Admin
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -192,7 +192,7 @@ export default function Dashboard() {
               {/* Recent customers */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Appointments />
+                  <Booking />
                 </Paper>
               </Grid>
             </Grid>
