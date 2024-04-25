@@ -7,11 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../components/Title';
 import GetUsers from '../firebase/GetUsers';
-// import IconButton from '@mui/material/IconButton';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import HandleRemove  from "../buttons/actions/HandleRemove";
-// import HandleNotify from '../buttons/actions/HandleNotify';
+import HandleNotify from '../buttons/actions/HandleNotify';
 
 
 function preventDefault(event) {
@@ -53,10 +50,8 @@ export default function Booking() {
               <TableCell align="center">{user.phone}</TableCell>
               <TableCell align="center">{`${user.email}`}</TableCell>
               <TableCell align="center">
-                < HandleRemove userId={user.id} users = {users} setUsers= {setUsers}/>
-                {/* <IconButton aria-label="Notify" onClick={() => HandleNotify(user.id)}>
-                  <ChatBubbleIcon />
-                </IconButton> */}
+                <HandleRemove userId={user.id} users = {users} setUsers= {setUsers}/>
+                <HandleNotify phoneNumber={user.phone} userName={user.fname}/>
               </TableCell>
             </TableRow>
           ))}

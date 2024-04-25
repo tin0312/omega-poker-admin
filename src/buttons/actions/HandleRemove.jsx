@@ -15,10 +15,10 @@ export default function HandleRemove({userId, users, setUsers}) {
   }
 
   return (
-    <div>
+    <>
       <IconButton aria-label="remove" onClick={() => removeUser(userId)}>
         <DeleteIcon />
       </IconButton>
-    </div>
+    </>
   );
 }
