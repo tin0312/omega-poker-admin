@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Title from './Title';
-import GetTotalCustomer from '../firebase/GetTotalCustomer';
+import React, { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Title from "./Title";
+import GetTotalCustomer from "../firebase/GetTotalCustomer";
 
-export default function Deposits() {
+export default function DailyTotal({ refetch, users }) {
   const [totalCustomer, setTotalCustomer] = useState(0);
-  const [currentTime, setCurrentTime] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
+  const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
 
+  // update time
   useEffect(() => {
-    const fetchData = async () => {
-      const totalCustomerCount = await GetTotalCustomer();
-      setTotalCustomer(totalCustomerCount);
-    };
-
-    fetchData();
-
     const updateTime = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
     }, 1000);
@@ -29,6 +23,16 @@ export default function Deposits() {
       clearInterval(updateDate);
     };
   }, []);
+
+  // update number of customers
+  useEffect(() => {
+    const fetchData = async () => {
+      const totalCustomerCount = await GetTotalCustomer();
+      setTotalCustomer(totalCustomerCount);
+    };
+
+    fetchData();
+  }, [refetch, users]);
 
   return (
     <React.Fragment>

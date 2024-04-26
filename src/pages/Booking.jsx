@@ -15,16 +15,14 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Booking({refetch}) {
-  const [users, setUsers] = useState([]);
-
+export default function Booking({refetch, users, setUsers}) {
   useEffect(() => {
     async function fetchData() {
       const data = await GetUsers();
       setUsers(data);
     }
     fetchData();
-  }, [refetch]);
+  }, [refetch, setUsers, users]);
 
 
   return (

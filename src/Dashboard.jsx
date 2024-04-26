@@ -89,6 +89,7 @@ const defaultTheme = createTheme();
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   const [refetch, setRefetch] = useState(false);
+  const [users, setUsers] = useState([]);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -189,17 +190,20 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <DailyTotal />
+                  <DailyTotal refetch={refetch} users={users} />
                 </Paper>
               </Grid>
               {/* Recent customers */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Booking refetch={refetch}/>
+                  <Booking 
+                    users={users}
+                    setUsers={setUsers}
+                    refetch={refetch}/>
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
+            <Copyright sx={{ p: "10px", position: 'fixed', bottom: 0, left: "50%" }} />
           </Container>
         </Box>
       </Box>
