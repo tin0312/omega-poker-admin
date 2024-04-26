@@ -15,7 +15,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Booking() {
+export default function Booking({refetch}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Booking() {
       setUsers(data);
     }
     fetchData();
-  }, []);
+  }, [refetch]);
 
 
   return (

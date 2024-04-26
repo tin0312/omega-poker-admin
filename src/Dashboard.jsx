@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -16,11 +17,11 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Booking from './pages/Booking';
 import { mainListItems, secondaryListItems } from "./components/navigation";
 import Chart from './components/Chart';
 import DailyTotal from "./components/DailyTotal";
+import HandleSync from "./buttons/actions/HandleSync";
 
 function Copyright(props) {
   return (
@@ -81,11 +82,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [refetch, setRefetch] = useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -123,7 +126,7 @@ export default function Dashboard() {
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+                <HandleSync setRefetch={setRefetch}/>
               </Badge>
             </IconButton>
           </Toolbar>
@@ -192,7 +195,7 @@ export default function Dashboard() {
               {/* Recent customers */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Booking />
+                  <Booking refetch={refetch}/>
                 </Paper>
               </Grid>
             </Grid>
