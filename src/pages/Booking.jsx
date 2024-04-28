@@ -27,16 +27,17 @@ export default function Booking({refetch, users, setUsers}) {
 
   return (
     <React.Fragment>
-      <Title>Recent Customers</Title>
-      <Table size="small">
+      <Title>Omega Poker Wailist</Title>
+      <Table sx={{mt: "30px"}} size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="center">Position</TableCell>
-            <TableCell align="center">Name</TableCell>
-            <TableCell align="center">Game</TableCell>
-            <TableCell align="center">Phone Number</TableCell>
-            <TableCell align="center">Email</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>POSITION</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>NAME</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>GAME</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>PHONE NUMBER</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>EMAIL</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>NOTIFY</TableCell>
+            <TableCell align="center" sx={{fontWeight: "bold"}}>ACTIONS</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -48,8 +49,10 @@ export default function Booking({refetch, users, setUsers}) {
               <TableCell align="center">{user.phone}</TableCell>
               <TableCell align="center">{`${user.email}`}</TableCell>
               <TableCell align="center">
-                <HandleRemove userId={user.id} users = {users} setUsers= {setUsers}/>
                 <HandleNotify phoneNumber={user.phone} userName={user.fname}/>
+              </TableCell>
+              <TableCell align="center">
+                <HandleRemove user={user} setUsers={setUsers} />
               </TableCell>
             </TableRow>
           ))}

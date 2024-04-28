@@ -96,9 +96,10 @@ export default function Dashboard() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={open} sx={{backgroundColor: "#14343b"}}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -116,6 +117,8 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
+               {/* Omega logo */}
+               <img src="../public/icons/omega-logo.png" alt="omega-icon" style={{ width: "80px", height: "80px", marginRight: "10px" }} />
             <Typography
               component="h1"
               variant="h6"

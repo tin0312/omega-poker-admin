@@ -8,7 +8,7 @@ export default function HandleSync({setRefetch}) {
     }
   return (
     <>
-    <IconButton aria-label="refresh" onClick={handleRefetch}>
+    <IconButton sx= {{color: "white"}}aria-label="refresh" onClick={handleRefetch}>
       <SyncIcon />
     </IconButton>
   </>

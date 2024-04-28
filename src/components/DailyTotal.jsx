@@ -36,7 +36,7 @@ export default function DailyTotal({ refetch, users }) {
 
   return (
     <React.Fragment>
-      <Title>Recent Customers</Title>
+      <Title>Current parties</Title>
       <Typography component="p" variant="h4">
         {totalCustomer}
       </Typography>
