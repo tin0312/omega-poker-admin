@@ -52,7 +52,7 @@ export default function Booking({refetch, users, setUsers}) {
                 <HandleNotify phoneNumber={user.phone} userName={user.fname}/>
               </TableCell>
               <TableCell align="center">
-                <HandleRemove user={user} setUsers={setUsers} />
+                <HandleRemove userId = {user.id} users={users} setUsers={setUsers} />
               </TableCell>
             </TableRow>
           ))}
