@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,14 +16,17 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Booking({refetch, users, setUsers}) {
+export default function Booking() {
+
+  const [refetch, users, setUsers] = useOutletContext();
+
   useEffect(() => {
     async function fetchData() {
       const data = await GetUsers();
       setUsers(data);
     }
     fetchData();
-  }, [refetch, setUsers, users]);
+  }, [refetch, setUsers]);
 
 
   return (
@@ -41,6 +45,15 @@ export default function Booking({refetch, users, setUsers}) {
           </TableRow>
         </TableHead>
         <TableBody>
+
+        {users.length === 0 && (
+            <TableRow>
+              <TableCell align="center" colSpan={7}>
+                <p>No current appointments.</p>
+              </TableCell>
+            </TableRow>
+          )}
+
           {users.slice().sort((user1, user2) => user1.position - user2.position).map((user) => (
             <TableRow key={user.id}>
               <TableCell align="center">{user.position}</TableCell>
@@ -56,13 +69,6 @@ export default function Booking({refetch, users, setUsers}) {
               </TableCell>
             </TableRow>
           ))}
-          {users.length === 0 && (
-            <TableRow>
-              <TableCell align="center" colSpan={6}>
-                <p>No current appointments.</p>
-              </TableCell>
-            </TableRow>
-          )}
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
