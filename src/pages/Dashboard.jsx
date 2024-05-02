@@ -142,9 +142,7 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-              <Badge badgeContent={4} color="secondary">
                 <HandleSync setRefetch={setRefetch} />
-              </Badge>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
