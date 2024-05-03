@@ -3,7 +3,7 @@ import { db } from './FirebaseConfig';
 
 async function GetUsers() {
     const waitlistData = [];
-    const waitlistRef = collection(db, 'waitlist');
+    const waitlistRef = collection(db, 'customers');
     const waitlistSnapshot = await getDocs(waitlistRef);
 
     waitlistSnapshot.forEach(doc => {
