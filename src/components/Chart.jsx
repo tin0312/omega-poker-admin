@@ -26,7 +26,7 @@ export default function Chart() {
   return (
     <React.Fragment>
       <Title>Today</Title>
-      <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden' }}>
+      <div style={{ width: '100%', flexGrow: 1, overflow: 'hidden'}}>
         <LineChart
           dataset={data}
           margin={{
@@ -48,7 +48,7 @@ export default function Chart() {
               label: 'Customer (person)',
               labelStyle: {
                 ...theme.typography.body1,
-                fill: theme.palette.text.primary,
+                fill: "#14343b",
               },
               tickLabelStyle: theme.typography.body2,
               max: 2500,
@@ -59,12 +59,12 @@ export default function Chart() {
             {
               dataKey: 'amount',
               showMark: false,
-              color: theme.palette.primary.light,
+              color: "#B9AD95",
             },
           ]}
           sx={{
-            [`.${axisClasses.root} line`]: { stroke: theme.palette.text.secondary },
-            [`.${axisClasses.root} text`]: { fill: theme.palette.text.secondary },
+            [`.${axisClasses.root} line`]: { stroke: "#14343b" },
+            [`.${axisClasses.root} text`]: { fill: "#14343b" },
             [`& .${axisClasses.left} .${axisClasses.label}`]: {
               transform: 'translateX(-25px)',
             },

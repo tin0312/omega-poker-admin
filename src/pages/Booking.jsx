@@ -71,7 +71,7 @@ export default function Booking() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+      <Link color="#B9AD95" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more
       </Link>
     </React.Fragment>
