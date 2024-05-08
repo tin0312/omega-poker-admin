@@ -8,18 +8,20 @@ const twilioClient = new Twilio(accountSid, authToken);
 
 export async function handler(event, context) {
     try {
-        const { userName, phoneNumber } = JSON.parse(event.body);
-
-        const message = await twilioClient.messages.create({
-            body: `Hello ${userName},\nYour table is ready, please come to the front desk.`,
-            from: twilioNumber,
-            to: phoneNumber,
-        });
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ messageSid: message.sid }),
-        };
+        const { userName, phoneNumber, newPosition } = JSON.parse(event.body);
+        if(!newPosition){
+            const message = await twilioClient.messages.create({
+                body: `Hello ${userName},\nYour table is ready, please come to the front desk.`,
+                from: twilioNumber,
+                to: phoneNumber,
+            })
+        } else{
+            const message = await twilioClient.messages.create({
+                body: `Hello ${userName},\nYour position in the waitlist has been updated to ${newPosition}.`,
+                from: twilioNumber,
+                to: phoneNumber,
+            })
+        }
     } catch (error) {
         return {
             statusCode: 500,
