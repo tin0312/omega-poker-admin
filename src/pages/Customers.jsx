@@ -63,7 +63,7 @@ export default function Customers() {
     return (
       <GridToolbarContainer sx={{
         "& .css-1knaqv7-MuiButtonBase-root-MuiButton-root, & .css-1k23hlb-MuiButtonBase-root-MuiButton-root": {
-            color: "#1A4D2E !important", // Change the text color of the buttons to red
+            color: "#1A4D2E !important"
           },
         "& .css-1k23hlb-MuiButtonBase-root-MuiButton-root":{
             borderColor: "#1A4D2E"

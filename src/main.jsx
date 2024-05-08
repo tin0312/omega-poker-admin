@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 import Booking from "./pages/Booking";
 import Employees from "./pages/Employees";
+import "../public/css/index.css"
 
 
 function App(){

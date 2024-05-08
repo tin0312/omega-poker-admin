@@ -1,0 +1,11 @@
+.css-2965rv-MuiButtonBase-root-MuiCheckbox-root,
+.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root
+{
+    color: #14343C !important ;
+}
+.css-1eed5fa-MuiInputBase-root-MuiInput-root::after{
+    border-color:  #14343C !important ;
+} 
+.css-wb57ya-MuiFormControl-root-MuiTextField-root:{
+    border: 1px solid red !important ;
+}
