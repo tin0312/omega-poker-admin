@@ -21,6 +21,7 @@ export default function Booking() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, users, setUsers] = useOutletContext();
 
+  // make a call to firestore to get waitlist datat 
   useEffect(() => {
     async function fetchData() {
       const data = await GetUsers();

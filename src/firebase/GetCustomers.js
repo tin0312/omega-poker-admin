@@ -1,7 +1,7 @@
 import { getDocs, collection} from 'firebase/firestore';
 import { db } from './FirebaseConfig';
 
-async function GetUsers() {
+async function GetCustomers() {
     const waitlistData = [];
     const waitlistRef = collection(db, 'customers');
     const waitlistSnapshot = await getDocs(waitlistRef);
@@ -12,4 +12,4 @@ async function GetUsers() {
     return waitlistData;
 }
 
-export default GetUsers;
+export default GetCustomers;
