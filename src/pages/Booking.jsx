@@ -12,10 +12,6 @@ import GetUsers from "../firebase/GetUsers";
 import HandleRemove from "../buttons/actions/HandleRemove";
 import HandleNotify from "../buttons/actions/HandleNotify";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 export default function Booking() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);

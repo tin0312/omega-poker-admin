@@ -7,34 +7,47 @@ import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuth } from "../context/AuthProvider";
 
-export const mainListItems = (
-  <React.Fragment>
-    <Link to="/" style={{ textDecoration: 'none', color: "black"  }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </Link>
-    <Link to="/customers" style={{ textDecoration: 'none', color: "black"  }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
-      </ListItemButton>
-    </Link>
-  </React.Fragment> 
-);
+export const MainListItems = () => {
+  const { logout } = useAuth();
 
-export const secondaryListItems = (
+  return (
+    <React.Fragment>
+      {/* Sign out button */}
+      <ListItemButton onClick={async () => await logout()}>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sign out" />
+      </ListItemButton>
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItemButton>
+      </Link>
+      <Link to="/customers" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Customers" />
+        </ListItemButton>
+      </Link>
+    </React.Fragment>
+  );
+};
+
+export const SecondaryListItems = () => (
   <React.Fragment>
     <ListSubheader component="div" inset>
       Employees
     </ListSubheader>
-    <Link to="employees" style={{ textDecoration: 'none', color: "black" }}>
+    <Link to="employees" style={{ textDecoration: "none", color: "black" }}>
       <ListItemButton>
         <ListItemIcon>
           <AssignmentIcon />

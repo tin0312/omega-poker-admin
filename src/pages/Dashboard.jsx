@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Outlet, Link} from "react-router-dom";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -11,19 +11,17 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-// import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import Booking from "./Booking";
-import { mainListItems, secondaryListItems } from "../components/navigation";
+import {MainListItems} from "../components/navigation";
+import {SecondaryListItems} from "../components/navigation";
 import Chart from "../components/Chart";
 import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
-import Customers from "./Customers";
+
 
 function Copyright(props) {
   return (
@@ -128,7 +126,7 @@ export default function Dashboard() {
             {/* Omega logo */}
             <Link to="/">
               <img
-                src="../public/icons/omega-logo.png"
+                src="/icons/omega-logo.png"
                 alt="omega-icon"
                 style={{ width: "80px", height: "80px", marginRight: "10px" }}
               />
@@ -160,9 +158,9 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
             <List component="nav">
-              {mainListItems}
+              {<MainListItems />}
               <Divider sx={{ my: 1 }} />
-              {secondaryListItems}
+              {<SecondaryListItems/>}
             </List>
            {/* Customer component here */}
         </Drawer>
@@ -215,7 +213,7 @@ export default function Dashboard() {
               </Grid>
             </Grid>
             <Copyright
-              sx={{ p: "10px", position: "fixed", bottom: 0, left: "50%" }}
+               sx={{ mt: 5 }}
             />
           </Container>
         </Box>

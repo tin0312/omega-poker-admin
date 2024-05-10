@@ -5,25 +5,33 @@ import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 import Booking from "./pages/Booking";
 import Employees from "./pages/Employees";
-import "../public/css/index.css"
+import "/public/css/index.css";
+import { AuthProvider } from "./context/AuthProvider";
+import SignInSide from "./Authentication/SignInSide";
+import PrivateRoute from "./components/PrivateRoute";
 
 
-function App(){
-  return(
-    <BrowserRouter>
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Dashboard />}>
-                <Route index element={<Booking/>}/>
-                <Route path="customers" element={<Customers/>}/>
-                <Route path="employees" element={<Employees/>}/>
+          <Route exact path="/" element={<PrivateRoute />}>
+            <Route exact path = "/" element={<Dashboard />}>
+            <Route index element={<Booking />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="employees" element={<Employees />} />
             </Route>
+          </Route>
+          <Route path="/sign-in" element={<SignInSide />} />
         </Routes>
-    </BrowserRouter>
-  
-  )
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <App />
+    <App />
   </React.StrictMode>
 );
