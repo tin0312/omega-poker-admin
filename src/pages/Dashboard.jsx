@@ -23,25 +23,6 @@ import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
 
 
-function Copyright(props) {
-  return (
-    // Footer 
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Omega Poker Admin
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -212,9 +193,6 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright
-               sx={{ mt: 5 }}
-            />
           </Container>
         </Box>
 

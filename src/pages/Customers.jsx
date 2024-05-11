@@ -90,9 +90,9 @@ export default function Customers() {
           "& .css-1k23hlb-MuiButtonBase-root-MuiButton-root": {
             borderColor: "#1A4D2E",
             "&:hover": {
-              borderColor: "#1A4D2E",
-            },
-          },
+              borderColor: "#1A4D2E"
+            }
+          }
         }}
       >
         <GridToolbarColumnsButton />

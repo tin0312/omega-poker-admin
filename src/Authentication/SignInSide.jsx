@@ -18,26 +18,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import FormHelperText from "@mui/material/FormHelperText";
 
-function Copyright(props) {
-  return (
-    // Footer
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Omega Poker Admin
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
@@ -127,10 +107,6 @@ export default function SignInSide() {
                 onChange={(e) => setPassWord(e.target.value)}
               />
               {error && <FormHelperText error>{error}</FormHelperText>}
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -140,15 +116,6 @@ export default function SignInSide() {
               >
                 Log in
               </Button>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  bottom: 0,
-                }}
-              >
-                <Copyright />
-              </Box>
             </Box>
           </Box>
         </Grid>
