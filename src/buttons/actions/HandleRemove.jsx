@@ -16,7 +16,6 @@ export default function HandleRemove({ userId, users, setUsers }) {
           const newPosition = user.position - 1;
           const docRef = doc(db, 'waitlist', user.id);
           updateDoc(docRef, { position: newPosition });
-          updateRemainingUser(user.fname, user.phone, newPosition); 
           return { ...user, position: newPosition };
         }
         return user;
@@ -28,28 +27,6 @@ export default function HandleRemove({ userId, users, setUsers }) {
       console.log("Error deleting user: ", error);
     }
   }
-
-// Update remaining user positions in SMS
-  async function updateRemainingUser(userName, phoneNumber, newPosition){
-      try {
-        const response = await fetch(import.meta.env.VITE_SERVERLESS_FUNCTION_URL,
-        {
-          method: "POST",
-          body: JSON.stringify({userName, phoneNumber, newPosition})
-        })
-        if(response.ok)
-        {
-          console.log("SMS message sent successfully")
-        } else{
-            const errorMessage = await response.text();
-            console.error("Error send SMS messgae", errorMessage)
-          }
-      } catch(error){
-        console.error("Error sending SMS message", error)
-      }
-
-  }
-
   return (
     <>
       <IconButton aria-label="remove" onClick={() => removeUser(userId)}>
