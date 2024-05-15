@@ -11,11 +11,17 @@ import Title from "../components/Title";
 import GetUsers from "../firebase/GetUsers";
 import HandleRemove from "../buttons/actions/HandleRemove";
 import HandleNotify from "../buttons/actions/HandleNotify";
+import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
 
 export default function Booking() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, users, setUsers] = useOutletContext();
+  const [successMessage, setSuccessMessage] = useState("");
+  const handleClose = () => {
+    setSuccessMessage('');
+  };
 
   // make a call to firestore to get waitlist datat 
   useEffect(() => {
@@ -54,9 +60,6 @@ export default function Booking() {
               PHONE NUMBER
             </TableCell>
             <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              EMAIL
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
               NOTIFY
             </TableCell>
             <TableCell align="center" sx={{ fontWeight: "bold" }}>
@@ -81,11 +84,11 @@ export default function Booking() {
                   <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
                   <TableCell align="center">{user.game}</TableCell>
                   <TableCell align="center">{user.phone}</TableCell>
-                  <TableCell align="center">{`${user.email}`}</TableCell>
                   <TableCell align="center">
                     <HandleNotify
                       phoneNumber={user.phone}
                       userName={user.fname}
+                      setSuccessMessage={setSuccessMessage}
                     />
                   </TableCell>
                   <TableCell align="center">
@@ -100,6 +103,18 @@ export default function Booking() {
           )}
         </TableBody>
       </Table>
+      <Backdrop
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#fff' }}
+        open={!!successMessage}
+        onClick={handleClose}
+      >
+        <Alert
+          severity="success"
+          sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        >
+          {successMessage}
+        </Alert>
+      </Backdrop>
       <TablePagination
         component="div"
         rowsPerPageOptions={[4,5]}

@@ -11,7 +11,7 @@ export async function handler(event, context) {
         const { userName, phoneNumber } = JSON.parse(event.body);
 
         const message = await twilioClient.messages.create({
-            body: `Hello ${userName},\nYour table is ready, please come to the front desk.`,
+            body: `Hello ${userName},\nYour are up in the waitlist, please come to the front desk.`,
             from: twilioNumber,
             to: phoneNumber,
         });

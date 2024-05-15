@@ -2,7 +2,7 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 
-export default function HandleNotify({ phoneNumber, userName }) {
+export default function HandleNotify({ phoneNumber, userName, setSuccessMessage }) {
   async function notifyUser() {
     try {
       const response = await fetch(import.meta.env.VITE_SERVERLESS_FUNCTION_URL, {
@@ -12,6 +12,7 @@ export default function HandleNotify({ phoneNumber, userName }) {
 
       if (response.ok) {
         console.log("SMS message sent successfully");
+        setSuccessMessage("Customer Notified");
       } else {
         const errorMessage = await response.text();
         console.error("Error sending SMS message", errorMessage);

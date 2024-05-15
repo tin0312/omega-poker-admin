@@ -14,6 +14,7 @@ export default function GetUpdateCustomers(setBadgeNum) {
     };
     fetchOriginalSize();
     const unsubscribe = onSnapshot(collection(db, "waitlist"), (snapshot) => {
+      
 
       // Calculate the difference between the new snapshot size and the original size
       const diff = snapshot.size - originalSize > 0 ? snapshot.size - originalSize : 0;
@@ -22,7 +23,10 @@ export default function GetUpdateCustomers(setBadgeNum) {
       setBadgeNum(diff);
    
       snapshot.docChanges().forEach(async (change)=>{
-        if (change.type === 'added' && diff > 0) {
+        if(change.type === 'removed'){
+              return
+        } 
+        else if (change.type === 'added' && diff > 0) {
           // Check if the document already exists in the customers collection
           const customerQuery = query(collection(db, "customers"), where("id", "==", change.doc.id));
           const customerSnapshot = await getDocs(customerQuery);
