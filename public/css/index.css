@@ -1,21 +1,4 @@
-.css-2965rv-MuiButtonBase-root-MuiCheckbox-root,
-.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root {
-  color: black !important ;
-}
-.css-1eed5fa-MuiInputBase-root-MuiInput-root::after,
-.css-n70jm4-MuiInputBase-root-MuiInput-root-MuiSelect-root::after,
-.MuiOutlinedInput-notchedOutline
-{
-  border-color: black !important;
-}
-.cl-internal-qk5yrq {
-  width: 38vw;
-  height: 39vh;
-}
-.css-1knaqv7-MuiButtonBase-root-MuiButton-root,
-.css-1k23hlb-MuiButtonBase-root-MuiButton-root {
+.MuiDataGrid-toolbarContainer button{
   color: black !important;
-}
-.css-1k23hlb-MuiButtonBase-root-MuiButton-root {
   border-color: black !important;
 }
