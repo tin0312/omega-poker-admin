@@ -124,11 +124,11 @@ export default function HandleNotify({
               </Button>
             </Box>
           ) : (
-            <Box sx={{ display: "flex", gap: "10px" }}>
-              <Button variant="contained" onClick={handleOpenCustomInput}>
+            <Box sx={{ display: "flex", gap: "10px", alignSelf: "flex-end" }}>
+              <Button sx={{backgroundColor: "black"}}  variant="contained" onClick={handleOpenCustomInput}>
                 Yes
               </Button>
-              <Button variant="contained" onClick={handleSendDefaultMessage}>
+              <Button  sx={{backgroundColor: "black"}} variant="contained" onClick={handleSendDefaultMessage}>
                 No
               </Button>
             </Box>

@@ -5,7 +5,6 @@ import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 import Booking from "./pages/Booking";
 import Employees from "./pages/Employees";
-import "/public/css/index.css";
 import { AuthProvider } from "./context/AuthProvider";
 import SignInSide from "./Authentication/SignInSide";
 import PrivateRoute from "./components/PrivateRoute";

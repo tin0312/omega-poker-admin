@@ -82,18 +82,6 @@ export default function Customers() {
     }
     return (
       <GridToolbarContainer
-        sx={{
-          "& .css-1knaqv7-MuiButtonBase-root-MuiButton-root, & .css-1k23hlb-MuiButtonBase-root-MuiButton-root":
-            {
-              color: "#1A4D2E !important",
-            },
-          "& .css-1k23hlb-MuiButtonBase-root-MuiButton-root": {
-            borderColor: "#1A4D2E",
-            "&:hover": {
-              borderColor: "#1A4D2E"
-            }
-          }
-        }}
       >
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
@@ -103,10 +91,10 @@ export default function Customers() {
         <Box sx={{ flexGrow: 1 }} />
         <Button
           sx={{
-            color: "#1A4D2E", // Change the text color
-            borderColor: "#1A4D2E", // Change the border color
+            color: "black", // Change the text color
+            borderColor: "black", // Change the border color
             "&:hover": {
-              borderColor: "#1A4D2E", // Change border color on hover
+              borderColor: "black", // Change border color on hover
             },
           }}
           variant="outlined"
