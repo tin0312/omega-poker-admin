@@ -11,19 +11,16 @@ import Title from "../components/Title";
 import GetUsers from "../firebase/GetUsers";
 import HandleRemove from "../buttons/actions/HandleRemove";
 import HandleNotify from "../buttons/actions/HandleNotify";
-import Alert from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
+import Alert from "@mui/material/Alert";
+import Backdrop from "@mui/material/Backdrop";
 
 export default function Booking() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, users, setUsers] = useOutletContext();
   const [successMessage, setSuccessMessage] = useState("");
-  const handleClose = () => {
-    setSuccessMessage('');
-  };
 
-  // make a call to firestore to get waitlist datat 
+  // make a call to firestore to get waitlist datat
   useEffect(() => {
     async function fetchData() {
       const data = await GetUsers();
@@ -40,6 +37,9 @@ export default function Booking() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0); // Reset to the first page when changing rows per page
   }
+  const handleCloseBackdrop = () => {
+    setSuccessMessage("");
+  };
 
   return (
     <React.Fragment>
@@ -104,20 +104,25 @@ export default function Booking() {
         </TableBody>
       </Table>
       <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#fff' }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: "#fff" }}
         open={!!successMessage}
-        onClick={handleClose}
+        onClick={handleCloseBackdrop}
       >
         <Alert
           severity="success"
-          sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
         >
           {successMessage}
         </Alert>
       </Backdrop>
       <TablePagination
         component="div"
-        rowsPerPageOptions={[4,5]}
+        rowsPerPageOptions={[4, 5]}
         count={users.length}
         rowsPerPage={rowsPerPage}
         page={page}

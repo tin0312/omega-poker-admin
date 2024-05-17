@@ -8,10 +8,10 @@ const twilioClient = new Twilio(accountSid, authToken);
 
 export async function handler(event, context) {
     try {
-        const { userName, phoneNumber } = JSON.parse(event.body);
+        const { userName, phoneNumber, message } = JSON.parse(event.body);
 
-        const message = await twilioClient.messages.create({
-            body: `Hello ${userName},\nYour are up in the waitlist, please come to the front desk.`,
+        const twilioMessage = await twilioClient.messages.create({
+            body: message,
             from: twilioNumber,
             to: phoneNumber,
         });
