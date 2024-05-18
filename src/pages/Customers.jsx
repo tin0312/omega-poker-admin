@@ -82,13 +82,26 @@ export default function Customers() {
     }
     return (
       <GridToolbarContainer
+      sx={{
+        "& .MuiButton-root":{
+          color: "black",
+          borderColor: "black",
+        }
+
+      }}
       >
-        <GridToolbarColumnsButton />
+        <GridToolbarColumnsButton/>
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector
           slotProps={{ tooltip: { title: "Change density" } }}
         />
         <Box sx={{ flexGrow: 1 }} />
+        <GridToolbarExport
+          slotProps={{
+            tooltip: { title: "Export data" },
+            button: { variant: "outlined" },
+          }}
+        />
         <Button
           sx={{
             color: "black", // Change the text color
@@ -98,6 +111,7 @@ export default function Customers() {
             },
           }}
           variant="outlined"
+          size="small"
           onClick={handleDeleteAll}
           startIcon={<ClearAllIcon />
         }
@@ -105,12 +119,6 @@ export default function Customers() {
           Clear All
         </Button>{" "}
         {/* Button to delete all rows */}
-        <GridToolbarExport
-          slotProps={{
-            tooltip: { title: "Export data" },
-            button: { variant: "outlined" },
-          }}
-        />
       </GridToolbarContainer>
     );
   }
