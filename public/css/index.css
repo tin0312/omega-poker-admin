@@ -3,6 +3,6 @@
   color: black !important;
 }
 /* Search focus input grid tool col */
-.css-nu1e6h-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+.MuiOutlinedInput-notchedOutline{
   border-color: black !important;
 }
