@@ -1,6 +1,8 @@
-/* .css-2965rv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
-  color: black !important;
-} */
+/* checked status grid tool col */
 .MuiCheckbox-root{
   color: black !important;
+}
+/* Search focus input grid tool col */
+.css-nu1e6h-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+  border-color: black !important;
 }
