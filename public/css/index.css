@@ -1,3 +1,6 @@
-.css-2965rv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
+/* .css-2965rv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
+  color: black !important;
+} */
+.MuiCheckbox-root{
   color: black !important;
 }
