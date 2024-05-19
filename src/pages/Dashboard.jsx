@@ -21,6 +21,7 @@ import {SecondaryListItems} from "../components/navigation";
 import Chart from "../components/Chart";
 import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
+import HandleAdd from "../buttons/actions/HandleAdd";
 
 
 const drawerWidth = 240;
@@ -121,6 +122,7 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
+                <HandleAdd/> 
                 <HandleSync setRefetch={setRefetch} />
           </Toolbar>
         </AppBar>

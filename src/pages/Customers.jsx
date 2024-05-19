@@ -92,6 +92,7 @@ export default function Customers() {
       >
         <GridToolbarColumnsButton/>
         <GridToolbarFilterButton />
+  
         <GridToolbarDensitySelector
           slotProps={{ tooltip: { title: "Change density" } }}
         />
