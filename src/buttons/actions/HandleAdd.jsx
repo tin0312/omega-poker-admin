@@ -49,17 +49,18 @@ export default function HanldeAdd() {
               transform: "translate(-50%, -50%)",
               backgroundColor: "white",
               padding: "50px",
+              borderRadius: "10px",
               width: "40vw",
               display: "flex",
               flexDirection: "column",
-              gap: 4, // Add some gap between rows
+              gap: 4,
             }}
             noValidate
             autoComplete="off"
           >
-            <FormLabel component="legend" sx={{ mb: 2 }}>
-              <Typography variant="h6" sx={{ color: "black" }}>
-                Customer Info
+            <FormLabel component="legend" sx={{ mb: 2, alignSelf: "center" }}>
+              <Typography variant="h4" sx={{ color: "black" }}>
+                Customer Information
               </Typography>
             </FormLabel>
             {/* Name */}
@@ -110,7 +111,15 @@ export default function HanldeAdd() {
                 </Select>
               </FormControl>
             </Box>
-             <Button color="primary">Add</Button>
+             <Button sx={{color: "white",
+              backgroundColor: "black",
+              border: "1px solid black",
+              borderRadius: "4px",
+              marginTop: "20px",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "black"}
+              }} onClick={addUser}>Add</Button>
           </Box>
         </Modal>
       )}
