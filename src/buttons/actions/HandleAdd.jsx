@@ -7,9 +7,19 @@ import Modal from "@mui/material/Modal";
 import { FormLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { FormControl, InputLabel, MenuItem, Select, Button } from "@mui/material";
+import { AddUser } from "../../firebase/AddUser";
+import {Alert, Backdrop} from "@mui/material";
 
 export default function HanldeAdd() {
   const [isNewFormOpen, setIsNewFormOpen] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState({
+    fname: "",
+    lname: "",
+    phone:"",
+    game:"",
+    email:""
+  })
+  const [successAddMessage, setSuccessAddMessage] = useState("");
 
   const handleOpen = () => {
     setIsNewFormOpen(true);
@@ -19,9 +29,16 @@ export default function HanldeAdd() {
     setIsNewFormOpen(false);
   };
 
+  const handleCloseBackdrop = () => {
+    setSuccessAddMessage("");
+  }
+
   async function addUser() {
     try {
-      console.log("Users added!");
+      const customerEmail = customerInfo.email ? customerInfo.email : "Not provided";
+      await AddUser(customerInfo.fName, customerInfo.lName, customerInfo.phone, customerEmail, customerInfo.game);
+      handleClose();
+      setSuccessAddMessage("User added successfully!")
     } catch (error) {
       console.log("Error adding user: ", error);
     }
@@ -70,12 +87,14 @@ export default function HanldeAdd() {
                 id="outlined-required"
                 label="First Name"
                 sx={{ flex: 1 }}
+                onChange={(event) => setCustomerInfo({...customerInfo, fName: event.target.value })}
               />
               <TextField
                 required
                 id="outlined-required"
                 label="Last Name"
                 sx={{ flex: 1 }}
+                onChange={(event) => setCustomerInfo({...customerInfo, lName: event.target.value })}
               />
             </Box>
             {/* Phone and Email */}
@@ -85,6 +104,7 @@ export default function HanldeAdd() {
                 label="Email"
                 variant="outlined"
                 sx={{ flex: 1}}
+                onChange={(event) => setCustomerInfo({...customerInfo, email: event.target.value })}
               />
               <TextField
                 required
@@ -93,6 +113,7 @@ export default function HanldeAdd() {
                 type="number"
                 variant="outlined"
                 sx={{ flex: 1}}
+                onChange={(event) => setCustomerInfo({...customerInfo, phone: event.target.value })}
               />
             </Box>
             {/* Game */}
@@ -102,9 +123,9 @@ export default function HanldeAdd() {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  //   value={age}
+                  value={customerInfo.game}
                   label="Game"
-                  //   onChange={handleChange}
+                  onChange={(event) => setCustomerInfo({...customerInfo, game: event.target.value })}
                 >
                   <MenuItem value={"NLH (No limit Texas Hold’em)"}>NLH (No limit Texas Hold’em)</MenuItem>
                   <MenuItem value={"PLO (Pot limit Omaha)"}>PLO (Pot limit Omaha)</MenuItem>
@@ -123,6 +144,23 @@ export default function HanldeAdd() {
           </Box>
         </Modal>
       )}
+       <Backdrop
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: "#fff" }}
+        open={!!successAddMessage}
+        onClick={handleCloseBackdrop}
+      >
+        <Alert
+          severity="success"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {successAddMessage}
+        </Alert>
+      </Backdrop>
     </>
   );
 }
