@@ -19,7 +19,10 @@ export default function HandleNotify({
   const [isMessageOption, setIsMessageOption] = useState(false);
 
   const handleOpen = () => setIsMessageOption(true);
-  const handleClose = () => setIsMessageOption(false);
+  const handleClose = () =>{ 
+    setIsCustomMessage(false);
+    setIsMessageOption(false);
+  };
   const handleOpenCustomInput = () => setIsCustomMessage(true);
 
   const handleCustomMessage = (e) => {

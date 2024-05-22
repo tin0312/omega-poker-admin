@@ -27,7 +27,8 @@ export default function Booking() {
       setUsers(data);
     }
     fetchData();
-  }, [refetch, setUsers]);
+    console.log("Refetching...")
+  }, [refetch,setUsers]);
 
   function handleChangePage(event, newPage) {
     setPage(newPage);
