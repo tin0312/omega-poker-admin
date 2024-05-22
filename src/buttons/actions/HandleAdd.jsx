@@ -36,7 +36,7 @@ export default function HanldeAdd() {
   async function addUser() {
     try {
       const customerEmail = customerInfo.email ? customerInfo.email : "Not provided";
-      await AddUser(customerInfo.fName, customerInfo.lName, customerInfo.phone, customerEmail, customerInfo.game);
+      await AddUser(customerInfo.fname, customerInfo.lname, customerInfo.phone, customerEmail, customerInfo.game);
       handleClose();
       setSuccessAddMessage("User added successfully!")
     } catch (error) {
@@ -87,14 +87,14 @@ export default function HanldeAdd() {
                 id="outlined-required"
                 label="First Name"
                 sx={{ flex: 1 }}
-                onChange={(event) => setCustomerInfo({...customerInfo, fName: event.target.value })}
+                onChange={(event) => setCustomerInfo({...customerInfo, fname: event.target.value })}
               />
               <TextField
                 required
                 id="outlined-required"
                 label="Last Name"
                 sx={{ flex: 1 }}
-                onChange={(event) => setCustomerInfo({...customerInfo, lName: event.target.value })}
+                onChange={(event) => setCustomerInfo({...customerInfo, lname: event.target.value })}
               />
             </Box>
             {/* Phone and Email */}
