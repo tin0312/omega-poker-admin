@@ -6,43 +6,32 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { FormLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { FormControl, InputLabel, MenuItem, Select, Button } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Button, Alert, Backdrop } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import { AddUser } from "../../firebase/AddUser";
-import {Alert, Backdrop} from "@mui/material";
 
-export default function HanldeAdd() {
+export default function HandleAdd() {
+  const { handleSubmit, control, reset, formState: { errors } } = useForm();
   const [isNewFormOpen, setIsNewFormOpen] = useState(false);
-  const [customerInfo, setCustomerInfo] = useState({
-    fname: "",
-    lname: "",
-    phone:"",
-    game:"",
-    email:""
-  })
   const [successAddMessage, setSuccessAddMessage] = useState("");
 
-  const handleOpen = () => {
-    setIsNewFormOpen(true);
-  };
-
+  const handleOpen = () => setIsNewFormOpen(true);
   const handleClose = () => {
     setIsNewFormOpen(false);
+    reset();
   };
+  const handleCloseBackdrop = () => setSuccessAddMessage("");
 
-  const handleCloseBackdrop = () => {
-    setSuccessAddMessage("");
-  }
-
-  async function addUser() {
+  const onSubmit = async (data) => {
     try {
-      const customerEmail = customerInfo.email ? customerInfo.email : "Not provided";
-      await AddUser(customerInfo.fname, customerInfo.lname, customerInfo.phone, customerEmail, customerInfo.game);
+      const customerEmail = data.email ? data.email : "Not provided";
+      await AddUser(data.fname, data.lname, data.phone, customerEmail, data.game);
       handleClose();
-      setSuccessAddMessage("User added successfully!")
+      setSuccessAddMessage("User added successfully!");
     } catch (error) {
       console.log("Error adding user: ", error);
     }
-  }
+  };
 
   return (
     <>
@@ -58,8 +47,9 @@ export default function HanldeAdd() {
         >
           <Box
             component="form"
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
-              "& .MuiTextField-root": { m: 0},
+              "& .MuiTextField-root": { m: 0 },
               position: "absolute",
               top: "50%",
               left: "50%",
@@ -81,70 +71,117 @@ export default function HanldeAdd() {
               </Typography>
             </FormLabel>
             {/* Name */}
-            <Box sx={{ display: "flex", gap:4}}>
-              <TextField
-                required
-                id="outlined-required"
-                label="First Name"
-                sx={{ flex: 1 }}
-                onChange={(event) => setCustomerInfo({...customerInfo, fname: event.target.value })}
+            <Box sx={{ display: "flex", gap: 4 }}>
+              <Controller
+                name="fname"
+                control={control}
+                defaultValue=""
+                rules={{ required: "First Name is required" }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="First Name"
+                    error={!!errors.fname}
+                    helperText={errors.fname ? errors.fname.message : ""}
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
-              <TextField
-                required
-                id="outlined-required"
-                label="Last Name"
-                sx={{ flex: 1 }}
-                onChange={(event) => setCustomerInfo({...customerInfo, lname: event.target.value })}
+              <Controller
+                name="lname"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Last Name is required" }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Last Name"
+                    error={!!errors.lname}
+                    helperText={errors.lname ? errors.lname.message : ""}
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
             </Box>
             {/* Phone and Email */}
-            <Box sx={{ display: "flex", gap:4}}>
-              <TextField
-                id="outlined-required"
-                label="Email"
-                variant="outlined"
-                sx={{ flex: 1}}
-                onChange={(event) => setCustomerInfo({...customerInfo, email: event.target.value })}
+            <Box sx={{ display: "flex", gap: 4 }}>
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Email"
+                    error={!!errors.email}
+                    helperText={errors.email ? errors.email.message : ""}
+                    variant="outlined"
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
-              <TextField
-                required
-                id="outlined-required"
-                label="Phone Number"
-                type="number"
-                variant="outlined"
-                sx={{ flex: 1}}
-                onChange={(event) => setCustomerInfo({...customerInfo, phone: event.target.value })}
+              <Controller
+                name="phone"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Phone Number is required" }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Phone Number"
+                    type="number"
+                    error={!!errors.phone}
+                    helperText={errors.phone ? errors.phone.message : ""}
+                    variant="outlined"
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
             </Box>
             {/* Game */}
             <Box sx={{ width: "100%" }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Game</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={customerInfo.game}
-                  label="Game"
-                  onChange={(event) => setCustomerInfo({...customerInfo, game: event.target.value })}
-                >
-                  <MenuItem value={"NLH (No limit Texas Hold’em)"}>NLH (No limit Texas Hold’em)</MenuItem>
-                  <MenuItem value={"PLO (Pot limit Omaha)"}>PLO (Pot limit Omaha)</MenuItem>
-                </Select>
-              </FormControl>
+              <Controller
+                name="game"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Game is required" }}
+                render={({ field }) => (
+                  <FormControl fullWidth error={!!errors.game}>
+                    <InputLabel id="demo-simple-select-label">Game</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Game"
+                    >
+                      <MenuItem value={"NLH (No limit Texas Hold’em)"}>NLH (No limit Texas Hold’em)</MenuItem>
+                      <MenuItem value={"PLO (Pot limit Omaha)"}>PLO (Pot limit Omaha)</MenuItem>
+                    </Select>
+                    {!!errors.game && <Typography color="error">{errors.game.message}</Typography>}
+                  </FormControl>
+                )}
+              />
             </Box>
-             <Button sx={{color: "white",
-              backgroundColor: "black",
-              border: "1px solid black",
-              borderRadius: "4px",
-              marginTop: "20px",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "black"}
-              }} onClick={addUser}>Add</Button>
+            <Button
+              type="submit"
+              sx={{
+                color: "white",
+                backgroundColor: "black",
+                border: "1px solid black",
+                borderRadius: "4px",
+                marginTop: "20px",
+                "&:hover": {
+                  backgroundColor: "white",
+                  color: "black"
+                }
+              }}
+            >
+              Add
+            </Button>
           </Box>
         </Modal>
       )}
-       <Backdrop
+      <Backdrop
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: "#fff" }}
         open={!!successAddMessage}
         onClick={handleCloseBackdrop}
