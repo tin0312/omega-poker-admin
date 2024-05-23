@@ -1,3 +1,4 @@
+// GetUpdateCustomers.js
 import { db } from "./FirebaseConfig";
 import { collection, onSnapshot, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -17,9 +18,22 @@ export default function GetUpdateCustomers(setBadgeNum) {
             if (customerSnapshot.empty) {
               await addDoc(collection(db, "customers"), change.doc.data());
               setBadgeNum(prev => prev + 1);  // Increment badge number by 1
+
+              // Prepare data for upload
+              const fileName = `${change.doc.id}.json`;
+              const fileData = JSON.stringify(change.doc.data());
+
+              // Call the Netlify serverless function to upload the file to Google Drive
+              await fetch('/.netlify/functions/uploadToDrive', {
+                method: 'POST',
+                body: JSON.stringify({ fileName, fileData }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
             }
           } else if (change.type === 'removed') {
-            return
+            return;
           }
         });
       }
