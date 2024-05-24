@@ -72,34 +72,40 @@ export default function Booking() {
           {users.length === 0 ? (
             <TableRow>
               <TableCell align="center" colSpan={7}>
-                <p>No current appointments.</p>
+                <p>No Bookings</p>
               </TableCell>
             </TableRow>
           ) : (
             users
               .sort((user1, user2) => user1.position - user2.position)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell align="center">{user.position}</TableCell>
-                  <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
-                  <TableCell align="center">{user.game}</TableCell>
-                  <TableCell align="center">{user.phone}</TableCell>
-                  <TableCell align="center">
-                    <HandleNotify
-                      phoneNumber={user.phone}
-                      userName={user.fname}
-                      setSuccessMessage={setSuccessMessage}
-                    />
-                  </TableCell>
-                  <TableCell align="center">
-                    <HandleRemove
-                      userId={user.id}
-                      users={users}
-                      setUsers={setUsers}
-                    />
-                  </TableCell>
-                </TableRow>
+              .map((user, index) => (
+                <TableRow 
+                key={user.id} 
+                sx={{ 
+                  '& > *': { paddingTop: "15px", paddingBottom: "15px" },
+                  backgroundColor: index % 2 === 0 ? '#f6f6f6' : 'white'
+                }}
+              >
+                <TableCell align="center">{user.position}</TableCell>
+                <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
+                <TableCell align="center">{user.game}</TableCell>
+                <TableCell align="center">{user.phone}</TableCell>
+                <TableCell align="center">
+                  <HandleNotify
+                    phoneNumber={user.phone}
+                    userName={user.fname}
+                    setSuccessMessage={setSuccessMessage}
+                  />
+                </TableCell>
+                <TableCell align="center">
+                  <HandleRemove
+                    userId={user.id}
+                    users={users}
+                    setUsers={setUsers}
+                  />
+                </TableCell>
+              </TableRow>
               ))
           )}
         </TableBody>
