@@ -80,6 +80,7 @@ export default function HandleAdd() {
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    required
                     label="First Name"
                     error={!!errors.fname}
                     helperText={errors.fname ? errors.fname.message : ""}
@@ -89,12 +90,14 @@ export default function HandleAdd() {
               />
               <Controller
                 name="lname"
+                required
                 control={control}
                 defaultValue=""
                 rules={{ required: "Last Name is required" }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    required
                     label="Last Name"
                     error={!!errors.lname}
                     helperText={errors.lname ? errors.lname.message : ""}
@@ -109,6 +112,12 @@ export default function HandleAdd() {
                 name="email"
                 control={control}
                 defaultValue=""
+                rules={{
+                  pattern: {
+                    value: /^([0-9]{9})|([A-Za-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,3})$/,
+                    message: "Invalid email or ID format"
+                  }
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -124,16 +133,28 @@ export default function HandleAdd() {
                 name="phone"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Phone Number is required" }}
+                rules={{
+                  required: "Phone Number required",
+                  pattern: {
+                    value: /^[0-9]{3} [0-9]{3} [0-9]{4}$/,
+                    message: "Phone number must be in the format XXX XXX XXXX"
+                  },
+                  maxLength: {
+                    value: 12,
+                    message: "Phone number cannot exceed 12 characters"
+                  }
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    required
                     label="Phone Number"
-                    type="number"
+                    type="text"
                     error={!!errors.phone}
                     helperText={errors.phone ? errors.phone.message : ""}
                     variant="outlined"
                     sx={{ flex: 1 }}
+                    inputProps={{ maxLength: 12 }}
                   />
                 )}
               />
@@ -146,7 +167,7 @@ export default function HandleAdd() {
                 defaultValue=""
                 rules={{ required: "Game is required" }}
                 render={({ field }) => (
-                  <FormControl fullWidth error={!!errors.game}>
+                  <FormControl required fullWidth error={!!errors.game}>
                     <InputLabel id="demo-simple-select-label">Game</InputLabel>
                     <Select
                       {...field}
