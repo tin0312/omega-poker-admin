@@ -8,18 +8,18 @@ import {
   Box,
 } from "@mui/material";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-
 export default function HandleNotify({
   phoneNumber,
   userName,
   setSuccessMessage,
+  setAlertSeverity
 }) {
   const [customMessage, setCustomMessage] = useState("");
   const [isCustomMessage, setIsCustomMessage] = useState(false);
   const [isMessageOption, setIsMessageOption] = useState(false);
 
   const handleOpen = () => setIsMessageOption(true);
-  const handleClose = () =>{ 
+  const handleClose = () => {
     setIsCustomMessage(false);
     setIsMessageOption(false);
   };
@@ -55,6 +55,7 @@ export default function HandleNotify({
     const defaultMessage = `Hi ${userName},\nYou are up the waitlist, please head to the cashier counter!`;
     handleSendMessage(defaultMessage);
     handleClose();
+    setAlertSeverity("success")
     setSuccessMessage("Default Message Sent");
   };
 
@@ -62,13 +63,28 @@ export default function HandleNotify({
     handleSendMessage(customMessage);
     setIsCustomMessage(false);
     handleClose();
+    setAlertSeverity("success");
     setSuccessMessage("Custom Message Sent");
   };
 
   return (
     <>
       <IconButton aria-label="Notify" onClick={handleOpen}>
-        <ChatBubbleIcon />
+        <Box
+          sx={{
+            backgroundColor: "green",
+            // borderColor: "green",
+            borderRadius: "5px",
+            padding: "8px", // Adjust padding as needed
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "40px", // Explicit width
+            height: "40px" // Explicit height
+          }}
+        >
+          <ChatBubbleIcon sx={{ color: "white", fontSize: "18px"}} />
+        </Box>
       </IconButton>
       <Modal
         open={isMessageOption}
@@ -128,10 +144,18 @@ export default function HandleNotify({
             </Box>
           ) : (
             <Box sx={{ display: "flex", gap: "10px", alignSelf: "flex-end" }}>
-              <Button sx={{backgroundColor: "black"}}  variant="contained" onClick={handleOpenCustomInput}>
+              <Button
+                sx={{ backgroundColor: "black" }}
+                variant="contained"
+                onClick={handleOpenCustomInput}
+              >
                 Yes
               </Button>
-              <Button  sx={{backgroundColor: "black"}} variant="contained" onClick={handleSendDefaultMessage}>
+              <Button
+                sx={{ backgroundColor: "black" }}
+                variant="contained"
+                onClick={handleSendDefaultMessage}
+              >
                 No
               </Button>
             </Box>

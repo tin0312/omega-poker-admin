@@ -11,24 +11,29 @@ import Title from "../components/Title";
 import GetUsers from "../firebase/GetUsers";
 import HandleRemove from "../buttons/actions/HandleRemove";
 import HandleNotify from "../buttons/actions/HandleNotify";
+import HandleEdit from "../buttons/actions/HandleEdit";
 import Alert from "@mui/material/Alert";
 import Backdrop from "@mui/material/Backdrop";
+import EditModel from "../components/EditModel";
 
 export default function Booking() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [refetch, users, setUsers] = useOutletContext();
   const [successMessage, setSuccessMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [editUser, setEditUser] = useState(null);
+  const [highlightedRow, setHighlightedRow] = useState(null);
 
-  // make a call to firestore to get waitlist datat
+  // make a call to firestore to get waitlist data
   useEffect(() => {
     async function fetchData() {
       const data = await GetUsers();
       setUsers(data);
     }
     fetchData();
-    console.log("Refetching...")
-  }, [refetch,setUsers]);
+    console.log("Refetching...");
+  }, [refetch, setUsers]);
 
   function handleChangePage(event, newPage) {
     setPage(newPage);
@@ -38,13 +43,30 @@ export default function Booking() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0); // Reset to the first page when changing rows per page
   }
+
   const handleCloseBackdrop = () => {
     setSuccessMessage("");
   };
 
+  function handleEditUser(user) {
+    setEditUser(user);
+  }
+
+  function handleCloseEditUser() {
+    setEditUser(null);
+  }
+
+  // Function to handle highlighting the edited row
+  const handleHighlightRow = (userId) => {
+    setHighlightedRow(userId);
+    setTimeout(() => {
+      setHighlightedRow(null);
+    }, 1000);
+  };
+
   return (
     <React.Fragment>
-      <Title>Omega Poker Wailist</Title>
+      <Title>Omega Poker Waitlist</Title>
       <Table sx={{ mt: "30px" }} size="small">
         <TableHead>
           <TableRow>
@@ -80,32 +102,35 @@ export default function Booking() {
               .sort((user1, user2) => user1.position - user2.position)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user, index) => (
-                <TableRow 
-                key={user.id} 
-                sx={{ 
-                  '& > *': { paddingTop: "15px", paddingBottom: "15px" },
-                  backgroundColor: index % 2 === 0 ? '#f6f6f6' : 'white'
-                }}
-              >
-                <TableCell align="center">{user.position}</TableCell>
-                <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
-                <TableCell align="center">{user.game}</TableCell>
-                <TableCell align="center">{user.phone}</TableCell>
-                <TableCell align="center">
-                  <HandleNotify
-                    phoneNumber={user.phone}
-                    userName={user.fname}
-                    setSuccessMessage={setSuccessMessage}
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  <HandleRemove
-                    userId={user.id}
-                    users={users}
-                    setUsers={setUsers}
-                  />
-                </TableCell>
-              </TableRow>
+                <TableRow
+                  key={user.id}
+                  sx={{
+                    '& > *': { paddingTop: "15px", paddingBottom: "15px" },
+                    backgroundColor: highlightedRow === user.id ? '#CCFFCC' : (index % 2 === 0 ? '#f6f6f6' : 'white'),
+                    transition: 'background-color 0.5s ease'
+                  }}
+                >
+                  <TableCell align="center">{user.position}</TableCell>
+                  <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
+                  <TableCell align="center">{user.game}</TableCell>
+                  <TableCell align="center">{user.phone}</TableCell>
+                  <TableCell align="center">
+                    <HandleNotify
+                      phoneNumber={user.phone}
+                      userName={user.fname}
+                      setSuccessMessage={setSuccessMessage}
+                      setAlertSeverity={setAlertSeverity}
+                    />
+                  </TableCell>
+                  <TableCell align="center">
+                    <HandleRemove
+                      userId={user.id}
+                      users={users}
+                      setUsers={setUsers}
+                    />
+                    <HandleEdit handleEditUser={handleEditUser} user={user}/>
+                  </TableCell>
+                </TableRow>
               ))
           )}
         </TableBody>
@@ -116,7 +141,7 @@ export default function Booking() {
         onClick={handleCloseBackdrop}
       >
         <Alert
-          severity="success"
+          severity={alertSeverity}
           sx={{
             position: "absolute",
             top: "50%",
@@ -137,6 +162,16 @@ export default function Booking() {
         onRowsPerPageChange={handleChangeRowsPerPage}
         sx={{ mt: 3 }}
       />
+      {editUser && (
+        <EditModel
+          user={editUser}
+          setUsers={setUsers}
+          onClose={handleCloseEditUser}
+          setSuccessMessage={setSuccessMessage}
+          setAlertSeverity={setAlertSeverity}
+          onUserEdit={handleHighlightRow} // Pass the highlighting function
+        />
+      )}
     </React.Fragment>
   );
 }
