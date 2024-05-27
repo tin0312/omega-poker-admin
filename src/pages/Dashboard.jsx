@@ -107,7 +107,7 @@ export default function Dashboard() {
           {/* Omega logo */}
           <Link to="/">
             <img
-              src="../public/omega-logo.png"
+              src="/omega-logo.png"
               alt="omega-icon"
               style={{ width: "80px", height: "80px", marginRight: "10px" }}
             />
