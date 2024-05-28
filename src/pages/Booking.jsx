@@ -17,13 +17,15 @@ import EditModel from "../components/EditModel";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import UpdateUserPosition from "../firebase/UpdateUserPosition";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import CasinoIcon from "@mui/icons-material/Casino";
+import Box from "@mui/material/Box";
+import Badge from "@mui/material/Badge";
 
 export default function Booking() {
   const [page, setPage] = useState(0);
@@ -34,7 +36,8 @@ export default function Booking() {
   const [editUser, setEditUser] = useState(null);
   const [highlightedRow, setHighlightedRow] = useState(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     async function fetchData() {
@@ -49,6 +52,12 @@ export default function Booking() {
     setPage(newPage);
   }
 
+  function getFirstLeter(lname) {
+    return lname.charAt(0).toUpperCase();
+  }
+  function getFirstWord(fname) {
+    return fname.split(" ")[0];
+  }
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0); // Reset to the first page when changing rows per page
@@ -116,64 +125,127 @@ export default function Booking() {
     <React.Fragment>
       <Title>Omega Poker Waitlist</Title>
       {isMobile ? (
-        <div style={{ marginTop: '30px' }}>
+        <div style={{ marginTop: "30px" }}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="droppable" direction="vertical">
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   {users.length === 0 ? (
-                    <Typography sx={{ "@media (max-width: 600px)": {
-                      textAlign: "center"
-                    },}}>No Bookings</Typography>
+                    <Typography
+                      sx={{
+                        "@media (max-width: 600px)": {
+                          textAlign: "center",
+                        },
+                      }}
+                    >
+                      No Bookings
+                    </Typography>
                   ) : (
                     users
                       .sort((user1, user2) => user1.position - user2.position)
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
                       .map((user, index) => (
-                        <Draggable key={user.id} draggableId={user.id} index={index}>
+                        <Draggable
+                          key={user.id}
+                          draggableId={user.id}
+                          index={index}
+                        >
                           {(provided, snapshot) => (
                             <Card
+                              id="card"
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
+                              onMouseEnter={() => setHoveredCard(user.id)}
+                              onMouseLeave={() => setHoveredCard(null)}
                               style={getDraggableProps(provided, snapshot)}
                               sx={{
                                 backgroundColor:
-                                  highlightedRow === user.id ? '#CCFFCC' : index % 2 === 0 ? '#f6f6f6' : 'white',
-                                transition: 'background-color 0.5s ease',
-                                marginBottom: '16px',
+                                  highlightedRow === user.id
+                                    ? "#CCFFCC"
+                                    : index % 2 === 0
+                                    ? "#f6f6f6"
+                                    : "white",
+                                transition: "background-color 0.5s ease",
+                                marginBottom: "16px",
                               }}
                             >
-                               <CardContent>
-                                <Box display="flex" justifyContent="space-between">
-                                  <Box display="flex" flexDirection="column">
-                                    <Typography variant="h6">
-                                      {user.fname} {user.lname}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
+                              <CardContent>
+                                <Box
+                                  display="flex"
+                                  justifyContent="space-between"
+                                >
+                                  <Box>
+                                    <Box sx={{ display: "flex" }}>
+                                      <Badge
+                                        badgeContent={user.position}
+                                        color="primary"
+                                        sx={{
+                                          ".MuiBadge-badge": {
+                                            backgroundColor: "green",
+                                            top: -6,
+                                            right: 7,
+                                            color: "white",
+                                            border: `2px solid white`,
+                                            padding: "0 4px",
+                                            fontSize: "0.75rem",
+                                          },
+                                        }}
+                                      />
+                                      <Typography variant="h6">
+                                        {getFirstWord(user.fname)}{" "}
+                                        {getFirstLeter(user.lname)}
+                                      </Typography>
+                                    </Box>
+                                    <Typography
+                                      variant="body2"
+                                      color="text.secondary"
+                                    >
                                       {user.phone}
                                     </Typography>
                                   </Box>
-                                  <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                                    <Typography variant="h6">
-                                      {user.game}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{fontWeight: "bold"}}>
-                                      {user.position}
-                                    </Typography>
-                                  </Box>
+                                  <Typography
+                                    sx={{
+                                      color: "green",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      gap: "3px",
+                                      border: "1px solid green",
+                                      borderRadius: "5px",
+                                      height: "25px",
+                                      padding: "5px",
+                                    }}
+                                    variant="body2"
+                                  >
+                                    <CasinoIcon sx={{ fontSize: "14px" }} />{" "}
+                                    {user.game}
+                                  </Typography>
                                 </Box>
                               </CardContent>
-                              <CardActions sx={{ justifyContent: 'center' }}>
-                                <HandleNotify
-                                  phoneNumber={user.phone}
-                                  userName={user.fname}
-                                  setSuccessMessage={setSuccessMessage}
-                                  setAlertSeverity={setAlertSeverity}
-                                />
-                                <HandleRemove userId={user.id} users={users} setUsers={setUsers} />
-                                <HandleEdit handleEditUser={handleEditUser} user={user} />
-                              </CardActions>
+                              {hoveredCard === user.id && (
+                                <CardActions sx={{ justifyContent: "center" }}>
+                                  {/* Your card actions components */}
+                                  <HandleNotify
+                                    phoneNumber={user.phone}
+                                    userName={user.fname}
+                                    setSuccessMessage={setSuccessMessage}
+                                    setAlertSeverity={setAlertSeverity}
+                                  />
+                                  <HandleRemove
+                                    userId={user.id}
+                                    users={users}
+                                    setUsers={setUsers}
+                                  />
+                                  <HandleEdit
+                                    handleEditUser={handleEditUser}
+                                    user={user}
+                                  />
+                                </CardActions>
+                              )}
                             </Card>
                           )}
                         </Draggable>
@@ -186,26 +258,26 @@ export default function Booking() {
           </DragDropContext>
         </div>
       ) : (
-        <Table sx={{ mt: '30px' }} size="small">
+        <Table sx={{ mt: "30px" }} size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="left" sx={{ fontWeight: 'bold' }}></TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="left" sx={{ fontWeight: "bold" }}></TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 POS
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 NAME
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 GAME
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 PHONE NUMBER
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 NOTIFY
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 ACTIONS
               </TableCell>
             </TableRow>
@@ -223,9 +295,16 @@ export default function Booking() {
                   ) : (
                     users
                       .sort((user1, user2) => user1.position - user2.position)
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
                       .map((user, index) => (
-                        <Draggable key={user.id} draggableId={user.id} index={index}>
+                        <Draggable
+                          key={user.id}
+                          draggableId={user.id}
+                          index={index}
+                        >
                           {(provided, snapshot) => (
                             <TableRow
                               ref={provided.innerRef}
@@ -234,11 +313,11 @@ export default function Booking() {
                               sx={{
                                 backgroundColor:
                                   highlightedRow === user.id
-                                    ? '#CCFFCC'
+                                    ? "#CCFFCC"
                                     : index % 2 === 0
-                                    ? '#f6f6f6'
-                                    : 'white',
-                                transition: 'background-color 0.5s ease',
+                                    ? "#f6f6f6"
+                                    : "white",
+                                transition: "background-color 0.5s ease",
                               }}
                             >
                               <TableCell align="left">
@@ -284,17 +363,17 @@ export default function Booking() {
         </Table>
       )}
       <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#fff' }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: "#fff" }}
         open={!!successMessage}
         onClick={handleCloseBackdrop}
       >
         <Alert
           severity={alertSeverity}
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         >
           {successMessage}

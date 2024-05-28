@@ -68,7 +68,6 @@ const Drawer = styled(MuiDrawer, {
     }),
   },
 }));
-
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [refetch, setRefetch] = useState(false);
@@ -159,10 +158,12 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, "@media (max-width: 600px)": {
+                    padding: 0
+                  }}} >
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={8} lg={9}  >
               <Paper
                 sx={{
                   "@media (max-width: 600px)": {
@@ -178,7 +179,7 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             {/* Recent total customers */}
-            <Grid item xs={12} md={4} lg={3}>
+            <Grid item xs={12} md={4} lg={3} sx={{ padding: { xs: 0, sm: 2 } }}>
               <Paper
                 sx={{
                   p: 2,

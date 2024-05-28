@@ -51,7 +51,7 @@ export default function DailyTotal({ refetch, users }) {
         },
       }}
     > 
-      <Title>Current parties</Title>
+      <Title>CURRENT WAITING</Title>
       <Typography component="p" variant="h4">
         {totalCustomer}
       </Typography>
