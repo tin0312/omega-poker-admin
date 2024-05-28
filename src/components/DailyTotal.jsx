@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Title from "./Title";
 import GetTotalCustomer from "../firebase/GetTotalCustomer";
+import Box from "@mui/material/Box";
 
 export default function DailyTotal({ refetch, users }) {
   const [totalCustomer, setTotalCustomer] = useState(0);
@@ -35,17 +36,31 @@ export default function DailyTotal({ refetch, users }) {
   }, [refetch, users]);
 
   return (
-    <React.Fragment>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        p: 2,
+        m: 1,
+        "@media (max-width: 600px)": {
+          p: 1,
+          m: 0,
+        },
+      }}
+    > 
       <Title>Current parties</Title>
       <Typography component="p" variant="h4">
         {totalCustomer}
       </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      <Typography color="text.secondary" sx={{ mt: 1 }}>
         on {currentDate}
       </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      <Typography color="text.secondary" sx={{ mt: 1 }}>
         {currentTime}
       </Typography>
-    </React.Fragment>
+    </Box>
   );
 }

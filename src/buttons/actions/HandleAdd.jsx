@@ -175,8 +175,8 @@ export default function HandleAdd() {
                       id="demo-simple-select"
                       label="Game"
                     >
-                      <MenuItem value={"NLH (No limit Texas Hold’em)"}>NLH (No limit Texas Hold’em)</MenuItem>
-                      <MenuItem value={"PLO (Pot limit Omaha)"}>PLO (Pot limit Omaha)</MenuItem>
+                      <MenuItem value={"NLH"}>NLH</MenuItem>
+                      <MenuItem value={"PLO"}>PLO</MenuItem>
                     </Select>
                     {!!errors.game && <Typography color="error">{errors.game.message}</Typography>}
                   </FormControl>

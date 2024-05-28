@@ -17,6 +17,13 @@ import EditModel from "../components/EditModel";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import UpdateUserPosition from "../firebase/UpdateUserPosition";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 export default function Booking() {
   const [page, setPage] = useState(0);
@@ -26,6 +33,8 @@ export default function Booking() {
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [editUser, setEditUser] = useState(null);
   const [highlightedRow, setHighlightedRow] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     async function fetchData() {
@@ -106,119 +115,186 @@ export default function Booking() {
   return (
     <React.Fragment>
       <Title>Omega Poker Waitlist</Title>
-      <Table sx={{ mt: "30px" }} size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}></TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              POSITION
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              NAME
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              GAME
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              PHONE NUMBER
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              NOTIFY
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              ACTIONS
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="droppable" direction="vertical">
-            {(provided) => (
-              <TableBody ref={provided.innerRef} {...provided.droppableProps}>
-                {users.length === 0 ? (
-                  <TableRow>
-                    <TableCell align="center" colSpan={7}>
-                      <p>No Bookings</p>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  users
-                    .sort((user1, user2) => user1.position - user2.position)
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((user, index) => (
-                      <Draggable
-                        key={user.id}
-                        draggableId={user.id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <TableRow
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            style={getDraggableProps(provided, snapshot)}
-                            sx={{
-                              backgroundColor:
-                                highlightedRow === user.id
-                                  ? "#CCFFCC"
-                                  : index % 2 === 0
-                                  ? "#f6f6f6"
-                                  : "white",
-                              transition: "background-color 0.5s ease",
-                            }}
-                          >
-                            <TableCell align="left">
-                              <div {...provided.dragHandleProps}>
-                                <ReorderIcon />
-                              </div>
-                            </TableCell>
-                            <TableCell align="center">
-                              {user.position}
-                            </TableCell>
-                            <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
-                            <TableCell align="center">{user.game}</TableCell>
-                            <TableCell align="center">{user.phone}</TableCell>
-                            <TableCell align="center">
-                              <HandleNotify
-                                phoneNumber={user.phone}
-                                userName={user.fname}
-                                setSuccessMessage={setSuccessMessage}
-                                setAlertSeverity={setAlertSeverity}
-                              />
-                            </TableCell>
-                            <TableCell align="center">
-                              <HandleRemove
-                                userId={user.id}
-                                users={users}
-                                setUsers={setUsers}
-                              />
-                              <HandleEdit
-                                handleEditUser={handleEditUser}
-                                user={user}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        )}
-                      </Draggable>
-                    ))
-                )}
-                {provided.placeholder}
-              </TableBody>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </Table>
-
+      {isMobile ? (
+        <div style={{ marginTop: '30px' }}>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="droppable" direction="vertical">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {users.length === 0 ? (
+                    <Typography sx={{ "@media (max-width: 600px)": {
+                      textAlign: "center"
+                    },}}>No Bookings</Typography>
+                  ) : (
+                    users
+                      .sort((user1, user2) => user1.position - user2.position)
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((user, index) => (
+                        <Draggable key={user.id} draggableId={user.id} index={index}>
+                          {(provided, snapshot) => (
+                            <Card
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={getDraggableProps(provided, snapshot)}
+                              sx={{
+                                backgroundColor:
+                                  highlightedRow === user.id ? '#CCFFCC' : index % 2 === 0 ? '#f6f6f6' : 'white',
+                                transition: 'background-color 0.5s ease',
+                                marginBottom: '16px',
+                              }}
+                            >
+                               <CardContent>
+                                <Box display="flex" justifyContent="space-between">
+                                  <Box display="flex" flexDirection="column">
+                                    <Typography variant="h6">
+                                      {user.fname} {user.lname}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                      {user.phone}
+                                    </Typography>
+                                  </Box>
+                                  <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                                    <Typography variant="h6">
+                                      {user.game}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary" sx={{fontWeight: "bold"}}>
+                                      {user.position}
+                                    </Typography>
+                                  </Box>
+                                </Box>
+                              </CardContent>
+                              <CardActions sx={{ justifyContent: 'center' }}>
+                                <HandleNotify
+                                  phoneNumber={user.phone}
+                                  userName={user.fname}
+                                  setSuccessMessage={setSuccessMessage}
+                                  setAlertSeverity={setAlertSeverity}
+                                />
+                                <HandleRemove userId={user.id} users={users} setUsers={setUsers} />
+                                <HandleEdit handleEditUser={handleEditUser} user={user} />
+                              </CardActions>
+                            </Card>
+                          )}
+                        </Draggable>
+                      ))
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      ) : (
+        <Table sx={{ mt: '30px' }} size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}></TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                POS
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                NAME
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                GAME
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                PHONE NUMBER
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                NOTIFY
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold' }}>
+                ACTIONS
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="droppable" direction="vertical">
+              {(provided) => (
+                <TableBody ref={provided.innerRef} {...provided.droppableProps}>
+                  {users.length === 0 ? (
+                    <TableRow>
+                      <TableCell align="center" colSpan={7}>
+                        <p>No Bookings</p>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    users
+                      .sort((user1, user2) => user1.position - user2.position)
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((user, index) => (
+                        <Draggable key={user.id} draggableId={user.id} index={index}>
+                          {(provided, snapshot) => (
+                            <TableRow
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              style={getDraggableProps(provided, snapshot)}
+                              sx={{
+                                backgroundColor:
+                                  highlightedRow === user.id
+                                    ? '#CCFFCC'
+                                    : index % 2 === 0
+                                    ? '#f6f6f6'
+                                    : 'white',
+                                transition: 'background-color 0.5s ease',
+                              }}
+                            >
+                              <TableCell align="left">
+                                <div {...provided.dragHandleProps}>
+                                  <ReorderIcon />
+                                </div>
+                              </TableCell>
+                              <TableCell align="center">
+                                {user.position}
+                              </TableCell>
+                              <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
+                              <TableCell align="center">{user.game}</TableCell>
+                              <TableCell align="center">{user.phone}</TableCell>
+                              <TableCell align="center">
+                                <HandleNotify
+                                  phoneNumber={user.phone}
+                                  userName={user.fname}
+                                  setSuccessMessage={setSuccessMessage}
+                                  setAlertSeverity={setAlertSeverity}
+                                />
+                              </TableCell>
+                              <TableCell align="center">
+                                <HandleRemove
+                                  userId={user.id}
+                                  users={users}
+                                  setUsers={setUsers}
+                                />
+                                <HandleEdit
+                                  handleEditUser={handleEditUser}
+                                  user={user}
+                                />
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </Draggable>
+                      ))
+                  )}
+                  {provided.placeholder}
+                </TableBody>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </Table>
+      )}
       <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: "#fff" }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: '#fff' }}
         open={!!successMessage}
         onClick={handleCloseBackdrop}
       >
         <Alert
           severity={alertSeverity}
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
           }}
         >
           {successMessage}

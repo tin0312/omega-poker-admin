@@ -70,7 +70,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [refetch, setRefetch] = useState(false);
   const [users, setUsers] = useState([]);
   const toggleDrawer = () => {
@@ -165,6 +165,9 @@ export default function Dashboard() {
             <Grid item xs={12} md={8} lg={9}>
               <Paper
                 sx={{
+                  "@media (max-width: 600px)": {
+                    marginTop: "30px"
+                  },
                   p: 2,
                   display: "flex",
                   flexDirection: "column",

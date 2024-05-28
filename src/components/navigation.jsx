@@ -16,7 +16,7 @@ export const MainListItems = () => {
   return (
     <React.Fragment>
       {/* Sign out button */}
-      <ListItemButton onClick={async () => await logout()}>
+      <ListItemButton sx={{marginTop: "30px"}} onClick={async () => await logout()}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>
