@@ -16,7 +16,7 @@ export const MainListItems = () => {
   return (
     <React.Fragment>
       {/* Sign out button */}
-      <ListItemButton sx={{marginTop: "30px"}} onClick={async () => await logout()}>
+      <ListItemButton sx={{marginTop: "50px"}} onClick={async () => await logout()}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>
@@ -42,18 +42,18 @@ export const MainListItems = () => {
   );
 };
 
-export const SecondaryListItems = () => (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      Employees
-    </ListSubheader>
-    <Link to="employees" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Employees" />
-      </ListItemButton>
-    </Link>
-  </React.Fragment>
-);
+// export const SecondaryListItems = () => (
+//   <React.Fragment>
+//     <ListSubheader component="div" inset>
+//       Employees
+//     </ListSubheader>
+//     <Link to="employees" style={{ textDecoration: "none", color: "black" }}>
+//       <ListItemButton>
+//         <ListItemIcon>
+//           <AssignmentIcon />
+//         </ListItemIcon>
+//         <ListItemText primary="Employees" />
+//       </ListItemButton>
+//     </Link>
+//   </React.Fragment>
+// );

@@ -45,7 +45,7 @@ export default function Chart() {
           ]}
           yAxis={[
             {
-              label: 'Customer (person)',
+              label: '(person)',
               labelStyle: {
                 ...theme.typography.body1,
                 fill: "#14343b",

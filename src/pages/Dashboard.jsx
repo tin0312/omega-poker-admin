@@ -16,13 +16,13 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MainListItems, SecondaryListItems } from "../components/navigation";
+import { MainListItems } from "../components/navigation";
 import Chart from "../components/Chart";
 import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
 import HandleAdd from "../buttons/actions/HandleAdd";
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -136,8 +136,8 @@ export default function Dashboard() {
         <Divider />
         <List component="nav">
           <MainListItems />
-          <Divider sx={{ my: 1 }} />
-          <SecondaryListItems />
+          {/* <Divider sx={{ my: 1 }} />
+          <SecondaryListItems /> */}
         </List>
       </Drawer>
       <Box
@@ -163,7 +163,7 @@ export default function Dashboard() {
             },
           }}
         >
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ paddingTop: "20px"}}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper
@@ -192,7 +192,7 @@ export default function Dashboard() {
             </Grid>
             {/* Recent customers */}
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column", height: {xs: "auto"} }}>
                 <Outlet context={[refetch, users, setUsers]} />
               </Paper>
             </Grid>
