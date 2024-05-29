@@ -6,12 +6,25 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { FormLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { FormControl, InputLabel, MenuItem, Select, Button, Alert, Backdrop } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Button,
+  Alert,
+  Backdrop,
+} from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { AddUser } from "../../firebase/AddUser";
 
 export default function HandleAdd() {
-  const { handleSubmit, control, reset, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isNewFormOpen, setIsNewFormOpen] = useState(false);
   const [successAddMessage, setSuccessAddMessage] = useState("");
 
@@ -25,7 +38,13 @@ export default function HandleAdd() {
   const onSubmit = async (data) => {
     try {
       const customerEmail = data.email ? data.email : "Not provided";
-      await AddUser(data.fname, data.lname, data.phone, customerEmail, data.game);
+      await AddUser(
+        data.fname,
+        data.lname,
+        data.phone,
+        customerEmail,
+        data.game
+      );
       handleClose();
       setSuccessAddMessage("User added successfully!");
     } catch (error) {
@@ -55,23 +74,30 @@ export default function HandleAdd() {
               left: "50%",
               transform: "translate(-50%, -50%)",
               backgroundColor: "white",
-              padding: "50px",
+              padding: { xs: "20px", sm: "30px", md: "50px" },
               borderRadius: "10px",
-              width: "40vw",
+              width: { xs: "90vw", sm: "70vw", md: "40vw" },
               display: "flex",
               flexDirection: "column",
-              gap: 4,
+              gap: 2,
+              boxShadow: 3,
             }}
             noValidate
             autoComplete="off"
           >
-            <FormLabel component="legend" sx={{ mb: 2, alignSelf: "center" }}>
-              <Typography variant="h4" sx={{ color: "black" }}>
+            <FormLabel component="legend" sx={{ mb: 2}}>
+              <Typography variant="h4" sx={{ color: "black", textAlign: "center" }}>
                 Customer Information
               </Typography>
             </FormLabel>
             {/* Name */}
-            <Box sx={{ display: "flex", gap: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+              }}
+            >
               <Controller
                 name="fname"
                 control={control}
@@ -107,16 +133,23 @@ export default function HandleAdd() {
               />
             </Box>
             {/* Phone and Email */}
-            <Box sx={{ display: "flex", gap: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+              }}
+            >
               <Controller
                 name="email"
                 control={control}
                 defaultValue=""
                 rules={{
                   pattern: {
-                    value: /^([0-9]{9})|([A-Za-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,3})$/,
-                    message: "Invalid email or ID format"
-                  }
+                    value:
+                      /^([0-9]{9})|([A-Za-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,3})$/,
+                    message: "Invalid email or ID format",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField
@@ -137,12 +170,12 @@ export default function HandleAdd() {
                   required: "Phone Number required",
                   pattern: {
                     value: /^[0-9]{3} [0-9]{3} [0-9]{4}$/,
-                    message: "Phone number must be in the format XXX XXX XXXX"
+                    message: "Phone number must be in the format XXX XXX XXXX",
                   },
                   maxLength: {
                     value: 12,
-                    message: "Phone number cannot exceed 12 characters"
-                  }
+                    message: "Phone number cannot exceed 12 characters",
+                  },
                 }}
                 render={({ field }) => (
                   <TextField
@@ -178,7 +211,11 @@ export default function HandleAdd() {
                       <MenuItem value={"NLH"}>NLH</MenuItem>
                       <MenuItem value={"PLO"}>PLO</MenuItem>
                     </Select>
-                    {!!errors.game && <Typography color="error">{errors.game.message}</Typography>}
+                    {!!errors.game && (
+                      <Typography color="error">
+                        {errors.game.message}
+                      </Typography>
+                    )}
                   </FormControl>
                 )}
               />
@@ -193,8 +230,8 @@ export default function HandleAdd() {
                 marginTop: "20px",
                 "&:hover": {
                   backgroundColor: "white",
-                  color: "black"
-                }
+                  color: "black",
+                },
               }}
             >
               Add

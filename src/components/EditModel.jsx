@@ -14,7 +14,15 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 
-export default function EditModel({ setAlertSeverity, setUsers, user, onClose, setSuccessMessage, onUserEdit, setModalOpen }) {
+export default function EditModel({
+  setAlertSeverity,
+  setUsers,
+  user,
+  onClose,
+  setSuccessMessage,
+  onUserEdit,
+  setModalOpen,
+}) {
   const {
     handleSubmit,
     control,
@@ -24,19 +32,27 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
 
   const onSubmit = async (data) => {
     // Destructure user data for easier comparison
-    const { fname: userFname, lname: userLname, phone: userPhone, game: userGame } = user;
+    const {
+      fname: userFname,
+      lname: userLname,
+      phone: userPhone,
+      game: userGame,
+    } = user;
     const { fname, lname, phone, game } = data;
 
     // Check if no input is provided or all inputs are unchanged
     if (
-        (!fname && !lname && !phone && !game) ||
-        (fname === userFname && lname === userLname && phone === userPhone && game === userGame)
+      (!fname && !lname && !phone && !game) ||
+      (fname === userFname &&
+        lname === userLname &&
+        phone === userPhone &&
+        game === userGame)
     ) {
-        setSuccessMessage("No changes made");
-        setAlertSeverity("warning");
-        onClose();
-        setModalOpen(false)
-        return;
+      setSuccessMessage("No changes made");
+      setAlertSeverity("warning");
+      onClose();
+      setModalOpen(false);
+      return;
     }
 
     // Prepare the data object to only include changed fields
@@ -47,27 +63,27 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
     if (game && game !== userGame) updatedData.game = game;
 
     try {
-        await UpdateUser(
-            updatedData.fname || userFname,
-            updatedData.lname || userLname,
-            updatedData.phone || userPhone,
-            updatedData.game || userGame,
-            user.id
-          );
-        setUsers(prevUsers =>
-            prevUsers.map(u => u.id === user.id ? { ...u, ...updatedData } : u)
-        );
-        setAlertSeverity("success");
-        setSuccessMessage("User Information Edited");
-        onUserEdit(user.id); // Highlight the edited row
-        onClose();
-        setModalOpen(false)
+      await UpdateUser(
+        updatedData.fname || userFname,
+        updatedData.lname || userLname,
+        updatedData.phone || userPhone,
+        updatedData.game || userGame,
+        user.id
+      );
+      setUsers((prevUsers) =>
+        prevUsers.map((u) => (u.id === user.id ? { ...u, ...updatedData } : u))
+      );
+      setAlertSeverity("success");
+      setSuccessMessage("User Information Edited");
+      onUserEdit(user.id); // Highlight the edited row
+      onClose();
+      setModalOpen(false);
     } catch (error) {
-        console.error("Error saving customer information", error);
-        setAlertSeverity("error");
-        setSuccessMessage("Failed to edit user information");
+      console.error("Error saving customer information", error);
+      setAlertSeverity("error");
+      setSuccessMessage("Failed to edit user information");
     }
-};
+  };
 
   return (
     <Modal
@@ -86,12 +102,13 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
           left: "50%",
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
-          padding: "50px",
+          padding: { xs: "20px", sm: "30px", md: "50px" },
           borderRadius: "10px",
-          width: "40vw",
+          width: { xs: "90vw", sm: "70vw", md: "40vw" },
           display: "flex",
           flexDirection: "column",
-          gap: 4,
+          gap: 2,
+          boxShadow: 3,
         }}
         noValidate
         autoComplete="off"
@@ -102,17 +119,19 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
           </Typography>
         </FormLabel>
         {/* Name */}
-        <Box sx={{ display: "flex", gap: 4 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: 2,
+          }}
+        >
           <Controller
             name="fname"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <TextField
-                {...field}
-                label="First Name"
-                sx={{ flex: 1 }}
-              />
+              <TextField {...field} label="First Name" sx={{ flex: 1 }} />
             )}
           />
           <Controller
@@ -120,16 +139,18 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <TextField
-                {...field}
-                label="Last Name"
-                sx={{ flex: 1 }}
-              />
+              <TextField {...field} label="Last Name" sx={{ flex: 1 }} />
             )}
           />
         </Box>
-        {/* Phone and Email */}
-        <Box sx={{ display: "flex", gap: 4 }}>
+        {/* Phone */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: 2,
+          }}
+        >
           <Controller
             name="phone"
             control={control}
@@ -173,18 +194,22 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
                   id="demo-simple-select"
                   label="Game"
                 >
-                  <MenuItem value={"NLH (No limit Texas Hold’em)"}>
-                    NLH (No limit Texas Hold’em)
-                  </MenuItem>
-                  <MenuItem value={"PLO (Pot limit Omaha)"}>
-                    PLO (Pot limit Omaha)
-                  </MenuItem>
+                  <MenuItem value={"NLH"}>NLH</MenuItem>
+                  <MenuItem value={"PLO"}>PLO</MenuItem>
                 </Select>
               </FormControl>
             )}
           />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "center",
+            gap: 2,
+            marginTop: 2,
+          }}
+        >
           <Button
             type="submit"
             sx={{
