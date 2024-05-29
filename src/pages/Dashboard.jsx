@@ -77,7 +77,7 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex"}}>
       <CssBaseline />
       <AppBar
         position="absolute"
@@ -192,7 +192,7 @@ export default function Dashboard() {
             </Grid>
             {/* Recent customers */}
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column", height: {xs: "auto"} }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column", height: {xs: "100vh", sm: "auto"} }}>
                 <Outlet context={[refetch, users, setUsers]} />
               </Paper>
             </Grid>

@@ -346,6 +346,7 @@ export default function Booking() {
                                   userName={user.fname}
                                   setSuccessMessage={setSuccessMessage}
                                   setAlertSeverity={setAlertSeverity}
+                                  setModalOpen={setModalOpen}
                                 />
                               </TableCell>
                               <TableCell align="center">
@@ -353,6 +354,7 @@ export default function Booking() {
                                   userId={user.id}
                                   users={users}
                                   setUsers={setUsers}
+                                  setModalOpen={setModalOpen}
                                 />
                                 <HandleEdit
                                   handleEditUser={handleEditUser}
