@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { FormLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import AddIcon from "@mui/icons-material/Add";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   FormControl,
   InputLabel,
@@ -27,6 +29,7 @@ export default function HandleAdd() {
   } = useForm();
   const [isNewFormOpen, setIsNewFormOpen] = useState(false);
   const [successAddMessage, setSuccessAddMessage] = useState("");
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleOpen = () => setIsNewFormOpen(true);
   const handleClose = () => {
@@ -54,8 +57,25 @@ export default function HandleAdd() {
 
   return (
     <>
-      <IconButton sx={{ color: "#FFF" }} aria-label="add" onClick={handleOpen}>
-        <PersonAddIcon />
+      <IconButton
+        sx={{
+          color: "#FFF",
+          ...(isMobile && {
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+            width: "70px",
+            height: "70px",
+            backgroundColor: "green",
+            '&:hover': {
+              backgroundColor: '#0d262b',
+            },
+          }),
+        }}
+        aria-label="add"
+        onClick={handleOpen}
+      >
+        {isMobile ? <AddIcon /> : <PersonAddIcon />}
       </IconButton>
       {isNewFormOpen && (
         <Modal
@@ -85,7 +105,7 @@ export default function HandleAdd() {
             noValidate
             autoComplete="off"
           >
-            <FormLabel component="legend" sx={{ mb: 2}}>
+            <FormLabel component="legend" sx={{ mb: 2 }}>
               <Typography variant="h4" sx={{ color: "black", textAlign: "center" }}>
                 Customer Information
               </Typography>

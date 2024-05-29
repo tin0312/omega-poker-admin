@@ -16,8 +16,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MainListItems } from "../components/navigation";
-import { SecondaryListItems } from "../components/navigation";
+import { MainListItems, SecondaryListItems } from "../components/navigation";
 import Chart from "../components/Chart";
 import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
@@ -68,6 +67,7 @@ const Drawer = styled(MuiDrawer, {
     }),
   },
 }));
+
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [refetch, setRefetch] = useState(false);
@@ -77,9 +77,7 @@ export default function Dashboard() {
   };
 
   return (
-    // <ThemeProvider theme={defaultTheme}>
     <Box sx={{ display: "flex" }}>
-      {/* Reset the css basaeline */}
       <CssBaseline />
       <AppBar
         position="absolute"
@@ -89,6 +87,8 @@ export default function Dashboard() {
         <Toolbar
           sx={{
             pr: "24px",
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <IconButton
@@ -103,25 +103,21 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          {/* Omega logo */}
-          <Link to="/">
-            <img
-              src="/omega-logo.png"
-              alt="omega-icon"
-              style={{ width: "80px", height: "80px", marginRight: "10px" }}
-            />
-          </Link>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
-            Dashboard
-          </Typography>
-          <HandleAdd />
-          <HandleSync setRefetch={setRefetch} />
+
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Link to="/">
+              <img
+                src="/omega-logo.png"
+                alt="omega-icon"
+                style={{ width: "100px", height: "100px" }}
+              />
+            </Link>
+          </Box>
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <HandleAdd />
+            <HandleSync setRefetch={setRefetch} />
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -139,11 +135,10 @@ export default function Dashboard() {
         </Toolbar>
         <Divider />
         <List component="nav">
-          {<MainListItems />}
+          <MainListItems />
           <Divider sx={{ my: 1 }} />
-          {<SecondaryListItems />}
+          <SecondaryListItems />
         </List>
-        {/* Customer component here */}
       </Drawer>
       <Box
         component="main"
@@ -158,12 +153,19 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, "@media (max-width: 600px)": {
-                    padding: 0
-                  }}} >
+        <Container
+          maxWidth="lg"
+          sx={{
+            mt: 4,
+            mb: 4,
+            "@media (max-width: 600px)": {
+              padding: 0,
+            },
+          }}
+        >
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}  >
+            <Grid item xs={12} md={8} lg={9}>
               <Paper
                 sx={{
                   p: 2,

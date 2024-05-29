@@ -125,7 +125,7 @@ export default function Booking() {
 
   return (
     <React.Fragment>
-      <Title>Omega Poker Waitlist</Title>
+      <Title>Bookings</Title>
       {isMobile ? (
         <div style={{ marginTop: "30px" }}>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -249,11 +249,8 @@ export default function Booking() {
                                     setSuccessMessage={setSuccessMessage}
                                     setAlertSeverity={setAlertSeverity}
                                     handleEditUser={handleEditUser}
-                                    onClose={() => {
-                                      setModalOpen(false);
-                                      console.log(modalOpen)
-                                      console.log("Closing");
-                                    }}
+                                    onClose={() => 
+                                      setModalOpen(false)}
                                     
                                   />
                                 </Modal>
@@ -391,6 +388,7 @@ export default function Booking() {
           {successMessage}
         </Alert>
       </Backdrop>
+      {!isMobile &&
       <TablePagination
         component="div"
         rowsPerPageOptions={[4, 5]}
@@ -400,7 +398,7 @@ export default function Booking() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         sx={{ mt: 3 }}
-      />
+      />}
       {editUser && (
         <EditModel
           user={editUser}
