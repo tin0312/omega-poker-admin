@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import Box from '@mui/material/Box';
 
-export default function HandleRemove({ userId, users, setUsers }) {
+export default function HandleRemove({ userId, users, setUsers, setModalOpen }) {
   async function removeUser(userId) {
     try {
       // Get the user to be removed
@@ -26,7 +26,7 @@ export default function HandleRemove({ userId, users, setUsers }) {
           return user;
         })
       );
-
+      setModalOpen(false)
       // Remove the user from the local state
       setUsers(updatedUsers.filter(user => user.id !== userId));
     } catch (error) {

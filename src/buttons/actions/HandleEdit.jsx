@@ -3,14 +3,14 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
 
-export default function EditButton({handleEditUser, user}) {
+export default function HandleEdit({handleEditUser, user}) {
   return (
     <IconButton aria-label="edit" onClick= {() => handleEditUser(user)}>
       <Box
         sx={{ 
           backgroundColor: "blue", 
           borderRadius: "5px", 
-          padding: "8px", // Adjust padding as needed
+          padding: "8px", 
           display: "flex", 
           alignItems: "center", 
           justifyContent: "center"

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 
-export default function EditModel({ setAlertSeverity, setUsers, user, onClose, setSuccessMessage, onUserEdit }) {
+export default function EditModel({ setAlertSeverity, setUsers, user, onClose, setSuccessMessage, onUserEdit, setModalOpen }) {
   const {
     handleSubmit,
     control,
@@ -35,6 +35,7 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
         setSuccessMessage("No changes made");
         setAlertSeverity("warning");
         onClose();
+        setModalOpen(false)
         return;
     }
 
@@ -60,6 +61,7 @@ export default function EditModel({ setAlertSeverity, setUsers, user, onClose, s
         setSuccessMessage("User Information Edited");
         onUserEdit(user.id); // Highlight the edited row
         onClose();
+        setModalOpen(false)
     } catch (error) {
         console.error("Error saving customer information", error);
         setAlertSeverity("error");

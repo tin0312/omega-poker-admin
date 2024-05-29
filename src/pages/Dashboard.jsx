@@ -166,9 +166,6 @@ export default function Dashboard() {
             <Grid item xs={12} md={8} lg={9}  >
               <Paper
                 sx={{
-                  "@media (max-width: 600px)": {
-                    marginTop: "30px"
-                  },
                   p: 2,
                   display: "flex",
                   flexDirection: "column",

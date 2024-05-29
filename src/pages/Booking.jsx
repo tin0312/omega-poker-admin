@@ -19,13 +19,14 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import UpdateUserPosition from "../firebase/UpdateUserPosition";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CasinoIcon from "@mui/icons-material/Casino";
 import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
+import ActionsModal from "../components/ActionsModel";
+import Modal from "@mui/material/Modal";
 
 export default function Booking() {
   const [page, setPage] = useState(0);
@@ -36,7 +37,8 @@ export default function Booking() {
   const [editUser, setEditUser] = useState(null);
   const [highlightedRow, setHighlightedRow] = useState(null);
   const theme = useTheme();
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null)
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
@@ -155,14 +157,19 @@ export default function Booking() {
                         >
                           {(provided, snapshot) => (
                             <Card
-                              id="card"
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              onMouseEnter={() => setHoveredCard(user.id)}
-                              onMouseLeave={() => setHoveredCard(null)}
+                              onClick={() => {
+                                if (!modalOpen) {
+                                  setModalOpen(true);
+                                  setSelectedUser(user.id)
+                                }
+                              }}
+                              
                               style={getDraggableProps(provided, snapshot)}
                               sx={{
+                                position: "relative",
                                 backgroundColor:
                                   highlightedRow === user.id
                                     ? "#CCFFCC"
@@ -226,25 +233,30 @@ export default function Booking() {
                                   </Typography>
                                 </Box>
                               </CardContent>
-                              {hoveredCard === user.id && (
-                                <CardActions sx={{ justifyContent: "center" }}>
-                                  {/* Your card actions components */}
-                                  <HandleNotify
-                                    phoneNumber={user.phone}
-                                    userName={user.fname}
+                              {modalOpen && selectedUser === user.id && (
+                                <Modal
+                                  open={modalOpen}
+                                  onClose={() => setModalOpen(false)}
+                                  aria-labelledby="card-actions-modal"
+                                  aria-describedby="modal with card actions"
+                                  setModalOpen={setModalOpen}
+                                >
+                                  <ActionsModal
+                                    setUsers={setUsers}
+                                    users={users}
+                                    user={user}
+                                    setModalOpen={setModalOpen}
                                     setSuccessMessage={setSuccessMessage}
                                     setAlertSeverity={setAlertSeverity}
-                                  />
-                                  <HandleRemove
-                                    userId={user.id}
-                                    users={users}
-                                    setUsers={setUsers}
-                                  />
-                                  <HandleEdit
                                     handleEditUser={handleEditUser}
-                                    user={user}
+                                    onClose={() => {
+                                      setModalOpen(false);
+                                      console.log(modalOpen)
+                                      console.log("Closing");
+                                    }}
+                                    
                                   />
-                                </CardActions>
+                                </Modal>
                               )}
                             </Card>
                           )}
@@ -397,6 +409,7 @@ export default function Booking() {
           setSuccessMessage={setSuccessMessage}
           setAlertSeverity={setAlertSeverity}
           onUserEdit={handleHighlightRow}
+          setModalOpen={setModalOpen}
         />
       )}
     </React.Fragment>

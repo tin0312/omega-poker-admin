@@ -12,7 +12,8 @@ export default function HandleNotify({
   phoneNumber,
   userName,
   setSuccessMessage,
-  setAlertSeverity
+  setAlertSeverity,
+  setModalOpen
 }) {
   const [customMessage, setCustomMessage] = useState("");
   const [isCustomMessage, setIsCustomMessage] = useState(false);
@@ -55,6 +56,7 @@ export default function HandleNotify({
     const defaultMessage = `Hi ${userName},\nYou are up the waitlist, please head to the cashier counter!`;
     handleSendMessage(defaultMessage);
     handleClose();
+    setModalOpen(false)
     setAlertSeverity("success")
     setSuccessMessage("Default Message Sent");
   };
@@ -63,6 +65,7 @@ export default function HandleNotify({
     handleSendMessage(customMessage);
     setIsCustomMessage(false);
     handleClose();
+    setModalOpen(false)
     setAlertSeverity("success");
     setSuccessMessage("Custom Message Sent");
   };
