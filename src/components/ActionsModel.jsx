@@ -29,8 +29,8 @@ const ActionsModal = ({ users, user, setSuccessMessage, setAlertSeverity, setUse
           handleEditUser={handleEditUser}
           user={user}
         />
-        <Button onClick={onClose} sx={{color: "black"}}>Close</Button>
       </CardActions>
+      <Button onClick={onClose} sx={{color: "black"}}>Close</Button>
     </Box>
   );
 };
