@@ -22,6 +22,7 @@ import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
 import HandleAdd from "../buttons/actions/HandleAdd";
 
+
 const drawerWidth = 180;
 
 const AppBar = styled(MuiAppBar, {
@@ -43,31 +44,34 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
     ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
+      display: 'none', // Hide on mobile devices
+      [theme.breakpoints.up('sm')]: {
+        display: 'block', // Show on devices sm and up
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9),
+        },
       },
     }),
   },
 }));
-
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [refetch, setRefetch] = useState(false);
