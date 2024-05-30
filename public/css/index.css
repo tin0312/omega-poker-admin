@@ -1,8 +1,11 @@
 /* checked status grid tool col */
-.MuiCheckbox-root{
+.MuiCheckbox-root {
   color: black !important;
 }
 /* Search focus input grid tool col */
-.MuiOutlinedInput-notchedOutline{
+.MuiOutlinedInput-notchedOutline {
   border-color: black !important;
+}
+.Mui-focused {
+  color: black !important;
 }

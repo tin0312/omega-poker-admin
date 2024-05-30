@@ -111,7 +111,18 @@ export default function SignInSide() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor: "#14343b" }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  color: "white",
+                  backgroundColor: "black",
+                  border: "1px solid black",
+                  borderRadius: "4px",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
                 disabled={loading}
               >
                 Log in

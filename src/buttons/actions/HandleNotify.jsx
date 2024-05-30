@@ -13,7 +13,7 @@ export default function HandleNotify({
   userName,
   setSuccessMessage,
   setAlertSeverity,
-  setModalOpen
+  setModalOpen,
 }) {
   const [customMessage, setCustomMessage] = useState("");
   const [isCustomMessage, setIsCustomMessage] = useState(false);
@@ -56,8 +56,8 @@ export default function HandleNotify({
     const defaultMessage = `Hi ${userName},\nYou are up the waitlist, please head to the cashier counter!`;
     handleSendMessage(defaultMessage);
     handleClose();
-    setModalOpen(false)
-    setAlertSeverity("success")
+    setModalOpen(false);
+    setAlertSeverity("success");
     setSuccessMessage("Default Message Sent");
   };
 
@@ -65,7 +65,7 @@ export default function HandleNotify({
     handleSendMessage(customMessage);
     setIsCustomMessage(false);
     handleClose();
-    setModalOpen(false)
+    setModalOpen(false);
     setAlertSeverity("success");
     setSuccessMessage("Custom Message Sent");
   };
@@ -76,24 +76,23 @@ export default function HandleNotify({
         <Box
           sx={{
             backgroundColor: "green",
-            // borderColor: "green",
             borderRadius: "5px",
-            padding: "8px", // Adjust padding as needed
+            padding: "8px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "40px", // Explicit width
-            height: "40px" // Explicit height
+            width: "40px",
+            height: "40px",
           }}
         >
-          <ChatBubbleIcon sx={{ color: "white", fontSize: "18px"}} />
+          <ChatBubbleIcon sx={{ color: "white", fontSize: "18px" }} />
         </Box>
       </IconButton>
       <Modal
         open={isMessageOption}
         onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="notification-modal-title"
+        aria-describedby="notification-modal-description"
       >
         <Box
           sx={{
@@ -106,11 +105,20 @@ export default function HandleNotify({
             display: "flex",
             flexDirection: "column",
             gap: "20px",
+            boxShadow: 24,
+            borderRadius: "8px",
+            width: "80%",
+            maxWidth: "600px",
           }}
         >
-          <Typography id="notification-modal-title" variant="h6" component="h2">
+          <Typography
+            id="notification-modal-title"
+            variant="h6"
+            component="h2"
+            textAlign="center"
+          >
             {isCustomMessage
-              ? "Customer notify message"
+              ? "Customer Notification Message"
               : "Do you want to send a custom message?"}
           </Typography>
           {isCustomMessage ? (
@@ -119,43 +127,69 @@ export default function HandleNotify({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "700px",
+                width: "100%",
                 gap: "30px",
               }}
             >
-              <Typography
-                id="notification-modal-title"
-                variant="h6"
-                component="h2"
-              >
-                Customer notify message
-              </Typography>
               <TextField
                 label="Custom Message"
                 variant="outlined"
                 value={customMessage}
                 onChange={handleCustomMessage}
-                sx={{ width: "100%" }}
+                fullWidth
               />
               <Button
                 variant="contained"
                 onClick={handleSendCustomMessage}
-                style={{ alignSelf: "flex-end" }}
+                sx={{
+                  color: "white",
+                  backgroundColor: "black",
+                  border: "1px solid black",
+                  borderRadius: "4px",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
               >
                 Send Message
               </Button>
             </Box>
           ) : (
-            <Box sx={{ display: "flex", gap: "10px", alignSelf: "flex-end" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
               <Button
-                sx={{ backgroundColor: "black" }}
+                sx={{
+                  color: "white",
+                  backgroundColor: "black",
+                  border: "1px solid black",
+                  borderRadius: "4px",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
                 variant="contained"
                 onClick={handleOpenCustomInput}
               >
                 Yes
               </Button>
               <Button
-                sx={{ backgroundColor: "black" }}
+                sx={{
+                  color: "red",
+                  backgroundColor: "white",
+                  border: "1px solid red",
+                  borderRadius: "4px",
+                  "&:hover": {
+                    backgroundColor: "red",
+                    color: "white",
+                  },
+                }}
                 variant="contained"
                 onClick={handleSendDefaultMessage}
               >
