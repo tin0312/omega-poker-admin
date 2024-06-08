@@ -25,29 +25,28 @@ export default function GetUpdateCustomers(setBadgeNum) {
                 collection(db, "customers"),
                 where("id", "==", change.doc.id)
               );
-              
 
               const customerSnapshot = await getDocs(customerQuery);
               if (customerSnapshot.empty) {
                 await addDoc(collection(db, "customers"), change.doc.data());
                 setBadgeNum((prev) => prev + 1); // Increment badge number by 1
 
-                // // Prepare data for upload
-                // const customerData = change.doc.data();
-                // const fileName = customerData.fname; // Use fname as filename
-                // const selectedFields = ["fname", "lname", "game", "phone"];
-                // const fileData = selectedFields
-                //   .map((field) => customerData[field])
-                //   .join(",");
+                // Prepare data for upload
+                const customerData = change.doc.data();
+                const fileName = customerData.fname; // Use fname as filename
+                const selectedFields = ["fname", "lname", "game", "phone"];
+                const fileData = selectedFields
+                  .map((field) => customerData[field])
+                  .join(",");
 
-                // // Call the Netlify serverless function to upload the file to Google Drive
-                // await fetch("/.netlify/functions/uploadToDrive", {
-                //   method: "POST",
-                //   body: JSON.stringify({ fileName, fileData }),
-                //   headers: {
-                //     "Content-Type": "application/json",
-                //   },
-                // });
+                // Call the Netlify serverless function to upload the file to Google Drive
+                await fetch("/.netlify/functions/uploadToDrive", {
+                  method: "POST",
+                  body: JSON.stringify({ fileName, fileData }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
               }
             } else if (change.type === "removed") {
               return;
