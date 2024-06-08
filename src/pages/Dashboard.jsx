@@ -22,7 +22,6 @@ import DailyTotal from "../components/DailyTotal";
 import HandleSync from "../buttons/actions/HandleSync";
 import HandleAdd from "../buttons/actions/HandleAdd";
 
-
 const drawerWidth = 180;
 
 const AppBar = styled(MuiAppBar, {
@@ -44,28 +43,28 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  '& .MuiDrawer-paper': {
-    position: 'relative',
-    whiteSpace: 'nowrap',
+  "& .MuiDrawer-paper": {
+    position: "relative",
+    whiteSpace: "nowrap",
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
     ...(!open && {
-      display: 'none', // Hide on mobile devices
-      [theme.breakpoints.up('sm')]: {
-        display: 'block', // Show on devices sm and up
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
+      display: "none", // Hide on mobile devices
+      [theme.breakpoints.up("sm")]: {
+        display: "block", // Show on devices sm and up
+        overflowX: "hidden",
+        transition: theme.transitions.create("width", {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
         width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up("sm")]: {
           width: theme.spacing(9),
         },
       },
@@ -81,7 +80,7 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ display: "flex"}}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="absolute"
@@ -167,7 +166,7 @@ export default function Dashboard() {
             },
           }}
         >
-          <Grid container spacing={3} sx={{ paddingTop: "20px"}}>
+          <Grid container spacing={3} sx={{ paddingTop: "20px" }}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper
@@ -196,7 +195,14 @@ export default function Dashboard() {
             </Grid>
             {/* Recent customers */}
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column", height: {xs: "100vh", sm: "auto"} }}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  height: { xs: "100vh", sm: "auto" },
+                }}
+              >
                 <Outlet context={[refetch, users, setUsers]} />
               </Paper>
             </Grid>
