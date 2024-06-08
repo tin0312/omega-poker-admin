@@ -38,7 +38,7 @@ export default function Booking() {
   const [highlightedRow, setHighlightedRow] = useState(null);
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null)
+  const [selectedUser, setSelectedUser] = useState(null);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
@@ -163,10 +163,9 @@ export default function Booking() {
                               onClick={() => {
                                 if (!modalOpen) {
                                   setModalOpen(true);
-                                  setSelectedUser(user.id)
+                                  setSelectedUser(user.id);
                                 }
                               }}
-                              
                               style={getDraggableProps(provided, snapshot)}
                               sx={{
                                 position: "relative",
@@ -205,6 +204,17 @@ export default function Booking() {
                                       <Typography variant="h6">
                                         {getFirstWord(user.fname)}{" "}
                                         {getFirstLeter(user.lname)}
+                                      </Typography>
+                                      <Typography
+                                        sx={{
+                                          pl: 1,
+                                          display: "flex",
+                                          alignItems: "center",
+                                          fontSize: "12px",
+                                          color: "#17a2b8",
+                                        }}
+                                      >
+                                        {user.wait ? `(${user.wait})` : "(N/A)"}
                                       </Typography>
                                     </Box>
                                     <Typography
@@ -249,9 +259,7 @@ export default function Booking() {
                                     setSuccessMessage={setSuccessMessage}
                                     setAlertSeverity={setAlertSeverity}
                                     handleEditUser={handleEditUser}
-                                    onClose={() => 
-                                      setModalOpen(false)}
-                                    
+                                    onClose={() => setModalOpen(false)}
                                   />
                                 </Modal>
                               )}
@@ -267,7 +275,13 @@ export default function Booking() {
           </DragDropContext>
         </div>
       ) : (
-        <Table sx={{ mt: "30px" }} size="small">
+        <Table
+          sx={{
+            mt: "30px",
+            borderTop: "3px solid #f6f6f6",
+          }}
+          size="small"
+        >
           <TableHead>
             <TableRow>
               <TableCell align="left" sx={{ fontWeight: "bold" }}></TableCell>
@@ -276,6 +290,9 @@ export default function Booking() {
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 NAME
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                BOOKED TIME
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 GAME
@@ -338,6 +355,12 @@ export default function Booking() {
                                 {user.position}
                               </TableCell>
                               <TableCell align="center">{`${user.fname} ${user.lname}`}</TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ color: "#17a2b8" }}
+                              >
+                                {user.wait ? `(${user.wait})` : "N/A"}
+                              </TableCell>
                               <TableCell align="center">{user.game}</TableCell>
                               <TableCell align="center">{user.phone}</TableCell>
                               <TableCell align="center">
@@ -390,17 +413,18 @@ export default function Booking() {
           {successMessage}
         </Alert>
       </Backdrop>
-      {!isMobile &&
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[4, 5]}
-        count={users.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        sx={{ mt: 3 }}
-      />}
+      {!isMobile && (
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[4, 5]}
+          count={users.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ mt: 3 }}
+        />
+      )}
       {editUser && (
         <EditModel
           user={editUser}
