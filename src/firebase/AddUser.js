@@ -7,25 +7,23 @@ import {
   doc,
   Timestamp,
 } from "firebase/firestore";
+import moment  from "moment-timezone"; 
 
-function formatTimeStamp(Timestamp) {
-  const date = Timestamp.toDate();
-  let hour = date.getHours();
-  const minute = date.getMinutes().toString().padStart(2, 0);
-  const ampm = hour > 12 ? "PM" : "AM";
-  hour = hour % 12 ? hour : 12;
-  const strHour = hour.toString().padStart(2, 0);
-  return `${strHour}:${minute} ${ampm}`;
+function formatTime(timestamp, timeZone = 'America/Toronto') {
+  const utcDate = timestamp.toDate(); 
+  const localDate = moment(utcDate).tz(timeZone);
+  return localDate.format('h:mm A');
 }
 
 async function AddUser(fname, lname, phone, email, game) {
   const userId = nanoid();
+  const timeStamp = formatTime(Timestamp.now());
   try {
     const collectionRef = collection(db, "waitlist");
     const collectionSnapshot = await getDocs(collectionRef);
     const userPosition = collectionSnapshot.size + 1;
     const userInfo = {
-      wait: formatTimeStamp(Timestamp.now()),
+      wait: timeStamp,
       id: userId,
       fname: fname,
       lname: lname,

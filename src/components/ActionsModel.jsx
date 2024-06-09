@@ -7,6 +7,7 @@ import Box from "@mui/material/Box"
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
+
 const ActionsModal = ({ users, user, setSuccessMessage, setAlertSeverity, setUsers, handleEditUser, onClose, setModalOpen }) => {
   return (
     <Box style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)", display: "flex", flexDirection: "column", alignItems: "center" }}>
